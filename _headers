@@ -1,0 +1,21 @@
+# Cloudflare Pages response headers.
+#
+# styles.css and main.js are requested with a ?v=N cache-buster, so they can be
+# cached hard - but that means a CSS or JS edit WITHOUT bumping ?v in all four
+# HTML files will be invisible to returning visitors for a year. Always bump it.
+#
+# Images are cached by filename, so replace rather than overwrite: give a changed
+# image a new name.
+
+/css/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/js/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/images/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# HTML is deliberately left alone: Cloudflare Pages already serves it
+# must-revalidate, so a deploy is live immediately. A catch-all /* rule here
+# would collide with the three above.
