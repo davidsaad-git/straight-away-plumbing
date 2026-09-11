@@ -66,12 +66,14 @@ page). It is cookieless, so no consent banner is needed.
   (`header`, `hero`, `floating_button`, `footer`)
 - `quote_submit` / `quote_error` - the quote form result
 
-Cloudflare Web Analytics has **no custom-event API**, so these events are recorded
-but not yet stored anywhere. They start working, with no code changes, as soon as
-either is enabled:
+Cloudflare Web Analytics has **no custom-event API**, so these events fire but are
+not yet stored anywhere.
 
-- **Cloudflare Zaraz** (`zaraz.track`) - free, but needs the domain on Cloudflare
-- **Google Analytics 4** (`gtag`) - free, works today, needs a snippet added
+**The decision is Cloudflare Zaraz** (`zaraz.track`), switched on once the real
+domain is live - Zaraz needs the domain to be a Cloudflare zone, so it cannot be
+enabled on `.pages.dev`. No code change is needed when the time comes: `track()`
+already calls it. The same helper also supports GA4 (`gtag`) if that is ever
+preferred instead.
 
 Events are also pushed to `window.dataLayer` for anything else that reads it.
 
@@ -86,9 +88,10 @@ Events are also pushed to `window.dataLayer` for anything else that reads it.
    Replace with the direct Google Business Profile review link.
 4. **Review counts** - the 5.0 stars / 56 reviews figures are hard-coded in
    `index.html`, `about.html` and `contact.html`; update them as the numbers grow.
-5. **Conversion tracking** - switch on Zaraz or GA4 so `call_click` and
-   `quote_submit` are actually recorded. Data only exists from the day it is
-   enabled; it cannot be backfilled.
+5. **Conversion tracking** - switch on Cloudflare Zaraz so `call_click` and
+   `quote_submit` are actually recorded. Needs the domain on Cloudflare first, so it
+   is a launch-day job. Data only exists from the day it is enabled; it cannot be
+   backfilled.
 
 ### Already done
 
