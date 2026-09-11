@@ -427,6 +427,9 @@ section { padding: 4.5rem 0; }
   margin-bottom: 1.1rem;
 }
 .service-icon svg { width: 30px; height: 30px; stroke: var(--white); }
+/* PNG icons sit a little smaller than the SVGs: their artwork runs edge to edge,
+   where the SVG shapes carry margin inside their own viewBox. */
+.service-icon img { width: 24px; height: 24px; }
 .service-card h3 { font-size: 1.12rem; margin-bottom: 0.55rem; color: var(--cyan-300); }
 .service-card p { color: #b9c9db; font-size: 0.92rem; margin-bottom: 1rem; }
 .service-card .link {
