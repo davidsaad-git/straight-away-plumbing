@@ -21,14 +21,16 @@ Shared assets: `css/styles.css`, `js/main.js`, `images/favicon.svg`.
 - Hours: Open 24 hours, 7 days
 - Rating: 5.0★ — 56 Google reviews
 - Facebook: https://www.facebook.com/p/Straight-Away-Plumbing-61574400357083/
+- Instagram: https://www.instagram.com/straightawayplumbing
 
 No street address is shown anywhere on the site (deliberately).
 
 ## Before going live — TODO
 
-1. **Logo** — the site uses the real logo images from `images/`
-   (`icononly_transparent_nobuffer.png` in the header/footer,
-   `icononly_transparent.png` as the favicon).
+1. **Logo** — the site uses the real logo images from `images/`:
+   `icononly_transparent_nobuffer.png` in the header/footer, `icononly.png` in the
+   About section, and `favicon.png` / `apple-touch-icon.png` / `icon-512.png` as the
+   browser and home-screen icons (square crops generated from the logo).
 2. **Quote form** — connected to Formspree (`https://formspree.io/f/myeyonvg`).
    Forms submit via AJAX (`js/main.js`) so visitors stay on the page and see a
    confirmation popup. Submissions are emailed to the Formspree account address.
