@@ -166,7 +166,7 @@ function showFormModal(ok) {
   const overlay = document.createElement('div');
   overlay.className = 'form-modal-overlay';
   overlay.innerHTML = ok
-    ? '<div class="form-modal"><div class="fm-icon">✅</div><h3>Request sent!</h3><p>Thanks — we\'ve got your quote request and we\'ll get back to you straight away.</p><button class="btn btn-primary" type="button">Close</button></div>'
+    ? '<div class="form-modal"><div class="fm-icon">✅</div><h3>Request sent!</h3><p>Thanks - we\'ve got your quote request and we\'ll get back to you straight away.</p><button class="btn btn-primary" type="button">Close</button></div>'
     : '<div class="form-modal"><div class="fm-icon">⚠️</div><h3>Something went wrong</h3><p>Your request didn\'t go through. Please try again, or call us on <a href="tel:0403322290"><strong>0403 322 290</strong></a>.</p><button class="btn btn-primary" type="button">Close</button></div>';
   const close = () => overlay.remove();
   overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
