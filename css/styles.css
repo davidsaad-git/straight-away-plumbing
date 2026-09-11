@@ -55,6 +55,9 @@ a { color: var(--blue-600); text-decoration: none; }
   font-size: 1rem;
   cursor: pointer;
   border: 2px solid transparent;
+  /* Without this the gradient is sized to the padding box, so the transparent
+     border shows a smeared band of the gradient's end colours. */
+  background-origin: border-box;
   transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
   white-space: nowrap;
 }
