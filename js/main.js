@@ -39,6 +39,60 @@ if (floatCall && trigger) {
   floatCall.classList.add('is-visible');
 }
 
+// Reviews carousel: arrows scroll one card at a time, and reviews long enough
+// to be clipped get a Read more toggle.
+const reviewsTrack = document.getElementById('reviewsTrack');
+
+if (reviewsTrack) {
+  const prev = document.querySelector('.rv-prev');
+  const next = document.querySelector('.rv-next');
+
+  const step = () => {
+    const card = reviewsTrack.querySelector('.review-card');
+    if (!card) return reviewsTrack.clientWidth;
+    return card.getBoundingClientRect().width + parseFloat(getComputedStyle(reviewsTrack).columnGap || 0);
+  };
+
+  // Tolerance covers the track's padding and sub-pixel rounding at either end
+  const EDGE = 12;
+
+  const syncArrows = () => {
+    const max = reviewsTrack.scrollWidth - reviewsTrack.clientWidth;
+    prev.disabled = reviewsTrack.scrollLeft <= EDGE;
+    next.disabled = reviewsTrack.scrollLeft >= max - EDGE;
+  };
+
+  prev.addEventListener('click', () => reviewsTrack.scrollBy({ left: -step(), behavior: 'smooth' }));
+  next.addEventListener('click', () => reviewsTrack.scrollBy({ left: step(), behavior: 'smooth' }));
+  reviewsTrack.addEventListener('scroll', syncArrows, { passive: true });
+  window.addEventListener('resize', syncArrows);
+  syncArrows();
+
+  reviewsTrack.querySelectorAll('.review-card').forEach((card) => {
+    const text = card.querySelector('p');
+    if (!text) return;
+
+    // scrollHeight is unreliable under -webkit-line-clamp, so measure the
+    // unclamped height by briefly opening the card.
+    const clampedHeight = text.clientHeight;
+    card.classList.add('is-open');
+    const fullHeight = text.scrollHeight;
+    card.classList.remove('is-open');
+    if (fullHeight <= clampedHeight + 1) return;
+
+    const toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'rc-more';
+    toggle.textContent = 'Read more';
+    toggle.addEventListener('click', () => {
+      const open = card.classList.toggle('is-open');
+      toggle.textContent = open ? 'Read less' : 'Read more';
+      syncArrows();
+    });
+    card.appendChild(toggle);
+  });
+}
+
 // Quote forms: submit via AJAX so visitors stay on the page, then show a popup
 function showFormModal(ok) {
   const overlay = document.createElement('div');
