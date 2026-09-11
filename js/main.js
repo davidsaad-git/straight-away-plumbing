@@ -36,11 +36,15 @@ if (navToggle && mainNav) {
   });
 }
 
-// Floating call button: reveal it once the quote form reaches the top of the
-// screen. Pages with no form fall back to their banner being scrolled past.
+// Floating call button. The home page has its own phone CTA in the hero, so
+// there the button waits until the quote form reaches the top of the screen.
+// Every other page has nothing above the fold to call from, so it shows on load
+// and stays put. `.hero` is only ever the home banner; inner pages use
+// `.page-hero`.
 const floatCall = document.querySelector('.float-call');
-const quoteForm = document.querySelector('.quote-card');
-const trigger = quoteForm || document.querySelector('.hero, .page-hero');
+const homeHero = document.querySelector('.hero');
+const quoteForm = homeHero ? document.querySelector('.quote-card') : null;
+const trigger = quoteForm || homeHero;
 
 if (floatCall && trigger) {
   const reached = quoteForm

@@ -874,7 +874,7 @@ section { padding: 4.5rem 0; }
 }
 
 @media (max-width: 640px) {
-  .why-grid, .services-grid, .values-grid, .areas-list, .footer-grid { grid-template-columns: 1fr; }
+  .why-grid, .services-grid, .values-grid, .areas-list { grid-template-columns: 1fr; }
   .insta-grid { grid-template-columns: 1fr 1fr; gap: 0.7rem; }
   .reviews-track { grid-auto-columns: 100%; }
   .rv-prev { left: -8px; }
@@ -890,7 +890,31 @@ section { padding: 4.5rem 0; }
     right: 1rem;
     bottom: 2.25rem;
   }
-  body { padding-bottom: 5.75rem; }
+  /* The room the button needs sits *inside* the footer, not under the body.
+     On the body it painted a white strip below the navy footer at full scroll. */
+  .site-footer { padding: 2.4rem 0 6.75rem; font-size: 0.88rem; }
+
+  /* One long stacked column made the footer taller than two phone screens.
+     The two link lists pair up; the blurb and the contact details (long email)
+     keep the full width. */
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem 1.2rem;
+    padding-bottom: 1.6rem;
+  }
+  .footer-about, .footer-grid > :last-child { grid-column: 1 / -1; }
+  .footer-grid h4 { font-size: 0.95rem; margin-bottom: 0.6rem; }
+  .footer-grid li { margin-bottom: 0.4rem; }
+  .footer-about p { margin: 0.7rem 0 0.9rem; }
+  .footer-social a { width: 34px; height: 34px; }
+  .footer-bottom { padding: 0.9rem 0; font-size: 0.8rem; }
+  /* A few strings here are single unbreakable words - the email address and the
+     Instagram handle. At narrow widths their min-content width was wider than
+     the column, which stretched the page and let it scroll sideways. Wrapping
+     only kicks in when they genuinely do not fit, so wider phones are unchanged. */
+  .footer-contact a, .ci-item a { overflow-wrap: anywhere; }
+  .btn { overflow-wrap: anywhere; max-width: 100%; }
+  .contact-grid > *, .ci-item > div { min-width: 0; }
 
   .topbar { font-size: 0.78rem; }
 
@@ -914,7 +938,10 @@ section { padding: 4.5rem 0; }
 
 /* Labels that screen readers announce but sighted users do not see: the form
    is designed around placeholders, which vanish as soon as someone types. */
-.sr-only {
+/* `input.sr-only` is here so the hidden honeypot beats `.quote-card input`,
+   which would otherwise stretch it to full width and push the page sideways. */
+.sr-only,
+input.sr-only {
   position: absolute;
   width: 1px; height: 1px;
   padding: 0; margin: -1px;
