@@ -315,6 +315,9 @@ section { padding: 4.5rem 0; }
   color: var(--navy-800);
 }
 .section-head p { color: var(--grey-600); margin-top: 0.8rem; }
+/* Shared by every section that ends in a centred button, so the gap above
+   them is identical throughout the page */
+.section-cta { text-align: center; margin-top: 2.4rem; }
 
 /* ---------- About ---------- */
 .about-grid {
@@ -431,7 +434,6 @@ section { padding: 4.5rem 0; }
   font-weight: 700;
   font-size: 0.9rem;
 }
-.services-cta { text-align: center; margin-top: 2.4rem; }
 
 /* ---------- Emergency banner ---------- */
 .emergency {
@@ -620,7 +622,6 @@ section { padding: 4.5rem 0; }
   filter: drop-shadow(0 1px 3px rgba(8, 17, 32, 0.85));
 }
 .insta-badge svg { width: 100%; height: 100%; display: block; }
-.insta-cta { text-align: center; margin-top: 2.2rem; }
 .ig-btn-glyph {
   width: 1.15em;
   height: 1.15em;
