@@ -9,6 +9,20 @@ if (navToggle && mainNav) {
   });
 }
 
+// Floating call button: only reveal it once the page's banner is scrolled past
+const floatCall = document.querySelector('.float-call');
+const banner = document.querySelector('.hero, .page-hero');
+
+if (floatCall && banner && 'IntersectionObserver' in window) {
+  const observer = new IntersectionObserver(
+    ([entry]) => floatCall.classList.toggle('is-visible', !entry.isIntersecting),
+    { threshold: 0 }
+  );
+  observer.observe(banner);
+} else if (floatCall) {
+  floatCall.classList.add('is-visible');
+}
+
 // Quote forms: submit via AJAX so visitors stay on the page, then show a popup
 function showFormModal(ok) {
   const overlay = document.createElement('div');

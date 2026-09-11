@@ -519,8 +519,6 @@ section { padding: 4.5rem 0; }
 }
 .page-hero h1 { font-size: clamp(1.9rem, 3.6vw, 2.7rem); margin-bottom: 0.5rem; }
 .page-hero p { color: #b9c9db; max-width: 38rem; margin: 0 auto; }
-.crumbs { margin-top: 1rem; font-size: 0.85rem; color: #8ba3bd; }
-.crumbs a { color: var(--cyan-400); }
 
 /* ---------- Values ---------- */
 .values-grid {
@@ -641,6 +639,16 @@ section { padding: 4.5rem 0; }
   padding: 0.85rem 1.4rem;
   border-radius: 999px;
   box-shadow: 0 8px 25px rgba(30, 136, 229, 0.5);
+  /* Revealed by js/main.js once the page banner is scrolled past */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(0.6rem);
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+}
+.float-call.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
 }
 
 /* ---------- Responsive ---------- */
@@ -682,9 +690,9 @@ section { padding: 4.5rem 0; }
     justify-content: center;
     left: 1rem;
     right: 1rem;
-    bottom: 1rem;
+    bottom: 2.25rem;
   }
-  body { padding-bottom: 4.5rem; }
+  body { padding-bottom: 5.75rem; }
 
   .topbar { font-size: 0.78rem; }
 
