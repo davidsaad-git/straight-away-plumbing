@@ -11,6 +11,7 @@ frameworks - just HTML, CSS and a little JavaScript.
 - `services.html` - All 12 services (from the Facebook page's services list)
 - `contact.html` - Contact details + quote form
 
+- `privacy.html` - privacy policy, linked from the footer of every page
 - `404.html` - shown for any unknown path. Its links are **root-relative**, because
   Cloudflare serves it at whatever depth was requested; relative paths would break
   the stylesheet and nav on anything below the first level.
@@ -64,6 +65,24 @@ gives suburb, state and postcode only.
 All of these carry absolute URLs. **They point at the `.pages.dev` address and must
 be updated when the real domain goes live** - see the TODO below.
 
+## Security and accessibility
+
+`_headers` sets HSTS, `X-Frame-Options: DENY`, a `Permissions-Policy` switching off
+APIs the site never uses, and a Content Security Policy. Cloudflare adds
+`referrer-policy` and `x-content-type-options` itself.
+
+The CSP keeps `img-src` open to any https host on purpose: the Instagram section
+loads whatever CDN the Behold feed returns, which is currently `behold.pictures` and
+is not guaranteed to stay that way. A strict allowlist there breaks the section
+silently. `connect-src` does name its hosts - Formspree, Behold and Cloudflare - so
+check it if you ever add a third-party script.
+
+On accessibility: the quote form is designed around placeholders, which vanish as
+soon as someone types and say nothing to a screen reader, so each field carries a
+visually hidden `<label>` (`.sr-only`). Every page has a skip link and a visible
+`:focus-visible` ring. Link colour is `--blue-700`, which clears WCAG AA on white at
+5.75; the old `--blue-600` failed at 3.68, so do not put it back on text links.
+
 ## Analytics
 
 Cloudflare Web Analytics is installed (the beacon snippet before `</body>` on each
@@ -97,7 +116,12 @@ Events are also pushed to `window.dataLayer` for anything else that reads it.
    Replace with the direct Google Business Profile review link.
 4. **Review counts** - the 5.0 stars / 56 reviews figures are hard-coded in
    `index.html`, `about.html` and `contact.html`; update them as the numbers grow.
-5. **Conversion tracking** - switch on Cloudflare Zaraz so `call_click` and
+5. **Confirm the privacy policy matches reality** - it was written from what the
+   site verifiably does. Check three claims in particular: that enquiry records are
+   kept only as long as needed for the job, warranty and tax obligations; that you
+   do not add people to any marketing list; and that you never share enquiry details
+   beyond what a job requires. Correct them if any is wrong.
+6. **Conversion tracking** - switch on Cloudflare Zaraz so `call_click` and
    `quote_submit` are actually recorded. Needs the domain on Cloudflare first, so it
    is a launch-day job. Data only exists from the day it is enabled; it cannot be
    backfilled.
