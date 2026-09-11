@@ -52,6 +52,27 @@ image a new filename rather than overwriting it.
 No street address is shown anywhere on the site (deliberately). The structured data
 gives suburb, state and postcode only.
 
+## Conventions
+
+Decisions already made for this site. They are easy to undo by accident and hard to
+spot afterwards, so check these before writing copy or adding markup.
+
+- **No em dashes anywhere.** Use a spaced hyphen (` - `). All 48 were removed from the
+  site deliberately; one slipped into new copy undoes that.
+- **Customer reviews are quoted verbatim** - the reviewers' own spelling, punctuation
+  and grammar. Do not tidy them up. Where a review was truncated on Google, it ends in
+  an ellipsis rather than being completed.
+- **Bump the `?v=` cache-buster** in all four HTML files on every CSS or JS edit. See
+  the note under Pages above.
+- **No street address**, in the copy or the structured data. Suburb, state and
+  postcode only.
+- **Service icons**: one icon per service, identical on the homepage and the services
+  page. Inline SVGs render at 30px, uploaded PNGs at 24px - the PNG artwork runs edge
+  to edge, where the SVG shapes carry margin inside their own viewBox, so equal box
+  sizes make the PNGs look bigger.
+- **Copy is plain and first person** ("we"), matching how a tradie actually speaks.
+  Avoid marketing filler.
+
 ## SEO
 
 - **Open Graph + Twitter card** tags on all four pages, sharing `images/og-image.png`
