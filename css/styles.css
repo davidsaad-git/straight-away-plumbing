@@ -49,15 +49,17 @@ a { color: var(--blue-600); text-decoration: none; }
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  padding: 0.85rem 1.7rem;
+  /* No border on any variant: a transparent border over a gradient composites
+     as a visible ring at some zoom levels and pixel ratios. The outline variant
+     draws its ring with an inset shadow, so every button keeps the same box
+     size. The extra 2px of padding replaces the width the border used to add. */
+  padding: calc(0.85rem + 2px) calc(1.7rem + 2px);
+  border: none;
   border-radius: 999px;
+  font-family: inherit;
   font-weight: 700;
   font-size: 1rem;
   cursor: pointer;
-  border: 2px solid transparent;
-  /* Without this the gradient is sized to the padding box, so the transparent
-     border shows a smeared band of the gradient's end colours. */
-  background-origin: border-box;
   transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
   white-space: nowrap;
 }
@@ -69,9 +71,12 @@ a { color: var(--blue-600); text-decoration: none; }
 .btn-outline {
   background: transparent;
   color: var(--white);
-  border-color: var(--cyan-400);
+  box-shadow: inset 0 0 0 2px var(--cyan-400);
 }
-.btn-outline:hover { background: rgba(79, 216, 247, 0.12); }
+.btn-outline:hover {
+  background: rgba(79, 216, 247, 0.12);
+  box-shadow: inset 0 0 0 2px var(--cyan-400), var(--shadow);
+}
 .btn-dark {
   background: var(--navy-800);
   color: var(--white);
