@@ -28,11 +28,10 @@ Shared assets: `css/styles.css`, `js/main.js`, `images/favicon.svg`.
    Facebook logo. To use the real logo file, save it as `images/logo.png` and replace
    the inline `<svg>` inside each `<a class="brand">` with
    `<img src="images/logo.png" alt="Straight Away Plumbing" width="46">`.
-2. **Quote form** — currently not connected to anything (it shows a "call us" message
-   on submit). Easiest fix: sign up at [formspree.io](https://formspree.io) (free),
-   then change `action="#"` to your Formspree URL and `method="post"` on both forms
-   (`index.html` and `contact.html`), and remove the form handler at the bottom of
-   `js/main.js`.
+2. **Quote form** — connected to Formspree (`https://formspree.io/f/myeyonvg`).
+   Submissions are emailed to the address registered on that Formspree account and
+   visitors land on `thanks.html` after submitting. The first-ever submission needs
+   to be confirmed via the email Formspree sends. Free plan: 50 submissions/month.
 3. **Gallery photos** — replace the "Add your photo" placeholder tiles in `index.html`
    with real job photos: `<img src="images/job1.jpg" alt="..." style="border-radius:12px">`
    (the Facebook page has photos to pull from).
