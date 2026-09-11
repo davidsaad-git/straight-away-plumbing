@@ -1,3 +1,30 @@
+// Lead tracking: a phone tap or a quote submission is the thing worth counting,
+// so both are reported as named events. Cloudflare Web Analytics has no
+// custom-event API, so these sit dormant until Zaraz or GA4 is switched on -
+// at which point they start recording with no further changes here.
+function track(name, props) {
+  const payload = props || {};
+  (window.dataLayer = window.dataLayer || []).push(Object.assign({ event: name }, payload));
+  try {
+    if (window.zaraz && typeof window.zaraz.track === 'function') window.zaraz.track(name, payload);
+    if (typeof window.gtag === 'function') window.gtag('event', name, payload);
+  } catch (err) {
+    /* Analytics must never break the page */
+  }
+}
+
+// Delegated, so it covers the floating button and anything added later
+document.addEventListener('click', (e) => {
+  const tel = e.target.closest('a[href^="tel:"]');
+  if (!tel) return;
+  const where = tel.classList.contains('float-call') ? 'floating_button'
+    : tel.closest('.site-header') ? 'header'
+    : tel.closest('.hero, .page-hero') ? 'hero'
+    : tel.closest('footer') ? 'footer'
+    : 'page';
+  track('call_click', { location: where, page: window.location.pathname });
+});
+
 // Mobile nav toggle
 const navToggle = document.getElementById('navToggle');
 const mainNav = document.getElementById('mainNav');
@@ -188,8 +215,10 @@ document.querySelectorAll('form[action*="formspree.io"]').forEach((form) => {
         headers: { Accept: 'application/json' },
       });
       if (res.ok) form.reset();
+      track(res.ok ? 'quote_submit' : 'quote_error', { page: window.location.pathname });
       showFormModal(res.ok);
     } catch (err) {
+      track('quote_error', { page: window.location.pathname });
       showFormModal(false);
     }
     btn.disabled = false;
