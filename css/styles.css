@@ -742,6 +742,9 @@ section { padding: 4.5rem 0; }
   font-size: 0.85rem;
   color: #6e86a1;
 }
+/* NSW requires the contractor licence number in advertising, so it sits in the
+   footer and therefore on every page */
+.footer-legal { margin-bottom: 0.35rem; }
 
 /* ---------- FAQ ---------- */
 /* Native <details>, so it opens without JavaScript and stays keyboard accessible */

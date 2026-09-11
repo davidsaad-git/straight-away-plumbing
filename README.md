@@ -82,18 +82,17 @@ Events are also pushed to `window.dataLayer` for anything else that reads it.
 2. **Swap the base URL** once the domain is live: canonical tags and OG tags in all
    four HTML files, `sitemap.xml`, `robots.txt`, and the `url` / `image` / `logo` /
    `@id` fields in the JSON-LD. Also update the hostname in Cloudflare Web Analytics.
-3. **ABN / Licence number** - add to the footer (`footer-bottom`). A NSW contractor
-   licence number is required in advertising, and the website counts.
-4. **Google reviews link** - the "Read Our Reviews" buttons link to a Google search.
+3. **Google reviews link** - the "Read Our Reviews" buttons link to a Google search.
    Replace with the direct Google Business Profile review link.
-5. **Review counts** - the 5.0 stars / 56 reviews figures are hard-coded in
+4. **Review counts** - the 5.0 stars / 56 reviews figures are hard-coded in
    `index.html`, `about.html` and `contact.html`; update them as the numbers grow.
-6. **Conversion tracking** - switch on Zaraz or GA4 so `call_click` and
+5. **Conversion tracking** - switch on Zaraz or GA4 so `call_click` and
    `quote_submit` are actually recorded. Data only exists from the day it is
    enabled; it cannot be backfilled.
 
 ### Already done
 
+- ABN and contractor licence number in the footer, so they appear on every page
 - Logo, favicons and home-screen icons, generated from the real logo
 - Quote form, live on Formspree (`https://formspree.io/f/myeyonvg`), submitting via
   AJAX so visitors stay on the page. Free plan: 50 submissions/month
