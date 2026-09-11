@@ -83,7 +83,7 @@ a { color: var(--blue-600); text-decoration: none; }
 }
 .topbar .container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   gap: 0.3rem 1.5rem;
   flex-wrap: wrap;
@@ -678,10 +678,7 @@ section { padding: 4.5rem 0; }
   }
   body { padding-bottom: 4.5rem; }
 
-  /* One tidy line in the top bar; email and phone live in the header/footer instead */
   .topbar { font-size: 0.78rem; }
-  .topbar .container { justify-content: center; }
-  .topbar .tb-email, .topbar .tb-phone { display: none; }
 
   /* The floating "Call Now" button is the phone CTA on mobile */
   .header-cta .btn { display: none; }
