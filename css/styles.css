@@ -81,6 +81,9 @@ a { color: var(--blue-600); text-decoration: none; }
   background: var(--navy-800);
   color: var(--white);
 }
+/* Phone CTAs show the number normally and a short label on phones, where the
+   number costs width and tapping the button dials anyway. */
+.cta-callnow { display: none; }
 
 /* ---------- Top bar ---------- */
 .topbar {
@@ -102,6 +105,7 @@ a { color: var(--blue-600); text-decoration: none; }
   align-items: center;
   gap: 0.4rem;
   white-space: nowrap;
+  font-weight: 700;
 }
 
 /* ---------- Header / Nav ---------- */
@@ -695,6 +699,9 @@ section { padding: 4.5rem 0; }
   body { padding-bottom: 5.75rem; }
 
   .topbar { font-size: 0.78rem; }
+
+  .cta-number { display: none; }
+  .cta-callnow { display: inline; }
 
   /* The floating "Call Now" button is the phone CTA on mobile */
   .header-cta .btn { display: none; }
