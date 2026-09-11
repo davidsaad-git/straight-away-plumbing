@@ -35,9 +35,11 @@ No street address is shown anywhere on the site (deliberately).
    Forms submit via AJAX (`js/main.js`) so visitors stay on the page and see a
    confirmation popup. Submissions are emailed to the Formspree account address.
    Free plan: 50 submissions/month.
-3. **Gallery photos** — replace the "Add your photo" placeholder tiles in `index.html`
-   with real job photos: `<img src="images/job1.jpg" alt="..." style="border-radius:12px">`
-   (the Facebook page has photos to pull from).
+3. **Instagram section** — the six tiles in `index.html` are the business's own
+   Instagram photos, saved under `images/instagram/` and each linking to its post.
+   Instagram blocks unauthenticated access, so a live self-updating feed would need
+   a widget service (Behold, SnapWidget, Elfsight) connected to the account. Until
+   then, refresh the tiles by hand when there are new posts worth showing.
 4. **Google reviews link** — the "Read Our Reviews" buttons link to a Google search.
    Replace with the direct Google Business review link if you have it.
 5. **ABN / Licence number** — add to the footer (`footer-bottom`) once you have them,
