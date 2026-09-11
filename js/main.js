@@ -39,6 +39,74 @@ if (floatCall && trigger) {
   floatCall.classList.add('is-visible');
 }
 
+// Instagram: swap the built-in tiles for the live Behold feed once it loads.
+// The tiles already in the HTML stay put as the fallback, so the section still
+// shows real work if the feed is slow, rate-limited or unavailable.
+const instaGrid = document.querySelector('.insta-grid');
+
+if (instaGrid && 'fetch' in window) {
+  const FEED_URL = 'https://feeds.behold.so/rF2mFXV2UAcRoEFfkhDG';
+
+  const IG_GLYPH =
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.6" y="2.6" width="18.8" height="18.8" rx="5.4"/>' +
+    '<circle cx="12" cy="12" r="4.4"/><circle class="dot" cx="17.8" cy="6.2" r="1.25"/></svg>';
+
+  const BADGES = {
+    VIDEO:
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M8 5.2v13.6L19 12z"/></svg>',
+    CAROUSEL_ALBUM:
+      '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#fff" stroke-width="2.2" stroke-linejoin="round">' +
+      '<rect x="8.5" y="2.5" width="13" height="13" rx="3"/><rect x="2.5" y="8.5" width="13" height="13" rx="3"/></svg>',
+  };
+
+  const tileFor = (post) => {
+    const sizes = post.sizes || {};
+    const source = sizes.medium || sizes.large || sizes.small;
+    const src = (source && source.mediaUrl) || post.mediaUrl;
+    if (!src || !post.permalink) return null;
+
+    const link = document.createElement('a');
+    link.className = 'insta-tile';
+    link.href = post.permalink;
+    link.target = '_blank';
+    link.rel = 'noopener';
+
+    const image = document.createElement('img');
+    image.src = src;
+    image.loading = 'lazy';
+    // Assigned as a property, so caption text is never parsed as markup
+    const caption = (post.prunedCaption || post.caption || '').replace(/\s+/g, ' ').trim();
+    image.alt = caption ? caption.slice(0, 120) : 'Straight Away Plumbing on Instagram';
+    link.appendChild(image);
+
+    const badge = BADGES[post.mediaType];
+    if (badge) {
+      const mark = document.createElement('span');
+      mark.className = 'insta-badge';
+      mark.innerHTML = badge;
+      link.appendChild(mark);
+    }
+
+    const overlay = document.createElement('span');
+    overlay.className = 'insta-overlay';
+    overlay.innerHTML = IG_GLYPH;
+    link.appendChild(overlay);
+
+    return link;
+  };
+
+  fetch(FEED_URL)
+    .then((response) => (response.ok ? response.json() : Promise.reject(response.status)))
+    .then((feed) => {
+      const tiles = (feed.posts || []).slice(0, 6).map(tileFor).filter(Boolean);
+      if (!tiles.length) return;
+      instaGrid.replaceChildren(...tiles);
+    })
+    .catch(() => {
+      /* Leave the fallback tiles in place */
+    });
+}
+
 // Reviews carousel: arrows scroll one card at a time, and reviews long enough
 // to be clipped get a Read more toggle.
 const reviewsTrack = document.getElementById('reviewsTrack');

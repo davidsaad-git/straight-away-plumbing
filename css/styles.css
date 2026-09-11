@@ -609,6 +609,17 @@ section { padding: 4.5rem 0; }
   stroke-width: 1.7;
 }
 .insta-overlay .dot { fill: var(--white); stroke: none; }
+/* Marks carousel and video posts, the way Instagram's own grid does */
+.insta-badge {
+  position: absolute;
+  top: 0.65rem;
+  right: 0.65rem;
+  width: 19px;
+  height: 19px;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 3px rgba(8, 17, 32, 0.85));
+}
+.insta-badge svg { width: 100%; height: 100%; display: block; }
 .insta-cta { text-align: center; margin-top: 2.2rem; }
 .ig-btn-glyph {
   width: 1.15em;
