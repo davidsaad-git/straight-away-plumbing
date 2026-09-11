@@ -9,16 +9,32 @@ if (navToggle && mainNav) {
   });
 }
 
-// Floating call button: only reveal it once the page's banner is scrolled past
+// Floating call button: reveal it once the quote form reaches the top of the
+// screen. Pages with no form fall back to their banner being scrolled past.
 const floatCall = document.querySelector('.float-call');
-const banner = document.querySelector('.hero, .page-hero');
+const quoteForm = document.querySelector('.quote-card');
+const trigger = quoteForm || document.querySelector('.hero, .page-hero');
 
-if (floatCall && banner && 'IntersectionObserver' in window) {
-  const observer = new IntersectionObserver(
-    ([entry]) => floatCall.classList.toggle('is-visible', !entry.isIntersecting),
-    { threshold: 0 }
-  );
-  observer.observe(banner);
+if (floatCall && trigger) {
+  const reached = quoteForm
+    ? (rect) => rect.top <= 0
+    : (rect) => rect.bottom <= 0;
+
+  let queued = false;
+  const update = () => {
+    queued = false;
+    floatCall.classList.toggle('is-visible', reached(trigger.getBoundingClientRect()));
+  };
+  const onScroll = () => {
+    if (!queued) {
+      queued = true;
+      requestAnimationFrame(update);
+    }
+  };
+
+  update();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
 } else if (floatCall) {
   floatCall.classList.add('is-visible');
 }
