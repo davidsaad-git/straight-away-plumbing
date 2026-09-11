@@ -84,6 +84,14 @@ a { color: var(--blue-600); text-decoration: none; }
 /* Phone CTAs show the number normally and a short label on phones, where the
    number costs width and tapping the button dials anyway. */
 .cta-callnow { display: none; }
+/* An SVG rather than the 📞 emoji, which renders in the device's own emoji
+   font and so came out black on some phones instead of red. */
+.icon-phone {
+  width: 1.15em;
+  height: 1.15em;
+  fill: #f6335a;
+  flex-shrink: 0;
+}
 
 /* ---------- Top bar ---------- */
 .topbar {
