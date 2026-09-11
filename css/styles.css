@@ -586,6 +586,30 @@ section { padding: 4.5rem 0; }
   color: #6e86a1;
 }
 
+/* ---------- Form confirmation modal ---------- */
+.form-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 17, 32, 0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 500;
+  padding: 1rem;
+}
+.form-modal {
+  background: var(--white);
+  border-radius: var(--radius);
+  max-width: 420px;
+  width: 100%;
+  padding: 2.2rem 1.9rem;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+}
+.form-modal .fm-icon { font-size: 2.6rem; margin-bottom: 0.6rem; }
+.form-modal h3 { color: var(--navy-800); margin-bottom: 0.5rem; font-size: 1.3rem; }
+.form-modal p { color: var(--grey-600); font-size: 0.95rem; margin-bottom: 1.4rem; }
+
 /* ---------- Floating call button (mobile) ---------- */
 .float-call {
   position: fixed;

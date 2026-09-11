@@ -17,21 +17,22 @@ Shared assets: `css/styles.css`, `js/main.js`, `images/favicon.svg`.
 ## Business details used
 
 - Phone: 0403 322 290 (tap-to-call everywhere)
-- Address: Alex Ave, Schofields NSW 2765
+- Email: straightawayplumbing@gmail.com
 - Hours: Open 24 hours, 7 days
-- Rating: 4.9★ — 56 Google reviews
+- Rating: 5.0★ — 56 Google reviews
 - Facebook: https://www.facebook.com/p/Straight-Away-Plumbing-61574400357083/
+
+No street address is shown anywhere on the site (deliberately).
 
 ## Before going live — TODO
 
-1. **Logo** — the drop logo in the header/footer/favicon is an SVG recreation of the
-   Facebook logo. To use the real logo file, save it as `images/logo.png` and replace
-   the inline `<svg>` inside each `<a class="brand">` with
-   `<img src="images/logo.png" alt="Straight Away Plumbing" width="46">`.
+1. **Logo** — the site uses the real logo images from `images/`
+   (`icononly_transparent_nobuffer.png` in the header/footer,
+   `icononly_transparent.png` as the favicon).
 2. **Quote form** — connected to Formspree (`https://formspree.io/f/myeyonvg`).
-   Submissions are emailed to the address registered on that Formspree account and
-   visitors land on `thanks.html` after submitting. The first-ever submission needs
-   to be confirmed via the email Formspree sends. Free plan: 50 submissions/month.
+   Forms submit via AJAX (`js/main.js`) so visitors stay on the page and see a
+   confirmation popup. Submissions are emailed to the Formspree account address.
+   Free plan: 50 submissions/month.
 3. **Gallery photos** — replace the "Add your photo" placeholder tiles in `index.html`
    with real job photos: `<img src="images/job1.jpg" alt="..." style="border-radius:12px">`
    (the Facebook page has photos to pull from).
