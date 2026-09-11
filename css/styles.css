@@ -874,8 +874,19 @@ section { padding: 4.5rem 0; }
 }
 
 @media (max-width: 640px) {
-  .why-grid, .services-grid, .values-grid, .areas-list { grid-template-columns: 1fr; }
+  .why-grid, .services-grid, .values-grid { grid-template-columns: 1fr; }
   .insta-grid { grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+
+  /* Service areas stay two across on a phone. The tiles tighten up so the
+     longest labels ("The Hills District") still sit on one line in a
+     half-width column. */
+  .areas-list { gap: 0.5rem; }
+  .areas-list li {
+    padding: 0.6rem 0.7rem;
+    font-size: 0.86rem;
+    gap: 0.45rem;
+  }
+  .areas-list li::before { width: 7px; height: 7px; }
   .reviews-track { grid-auto-columns: 100%; }
   .rv-prev { left: -8px; }
   .rv-next { right: -8px; }
