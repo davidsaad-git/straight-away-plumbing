@@ -20,8 +20,9 @@ Shared assets: `css/styles.css`, `js/main.js`, and the icons in `images/`
 (`favicon.png`, `apple-touch-icon.png`, `icon-512.png`, `og-image.png`).
 
 Both `styles.css` and `main.js` are linked with a `?v=N` cache-buster. **Bump that
-number on every CSS or JS edit**, in all four HTML files, or browsers and the
-Cloudflare edge will keep serving the old file and the change will look broken.
+number on every CSS or JS edit**, in all six HTML files (the four above plus
+`privacy.html` and `404.html`), or browsers and the Cloudflare edge will keep
+serving the old file and the change will look broken.
 
 ## Hosting
 
@@ -62,7 +63,7 @@ spot afterwards, so check these before writing copy or adding markup.
 - **Customer reviews are quoted verbatim** - the reviewers' own spelling, punctuation
   and grammar. Do not tidy them up. Where a review was truncated on Google, it ends in
   an ellipsis rather than being completed.
-- **Bump the `?v=` cache-buster** in all four HTML files on every CSS or JS edit. See
+- **Bump the `?v=` cache-buster** in all six HTML files on every CSS or JS edit. See
   the note under Pages above.
 - **No street address**, in the copy or the structured data. Suburb, state and
   postcode only.
