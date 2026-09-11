@@ -19,3 +19,15 @@
 # HTML is deliberately left alone: Cloudflare Pages already serves it
 # must-revalidate, so a deploy is live immediately. A catch-all /* rule here
 # would collide with the three above.
+
+# Security headers. This site has no login, no database and stores nothing, so
+# these are defence in depth rather than a fix for any particular hole.
+#
+# Note there is deliberately no Cache-Control here: that would collide with the
+# three rules above. img-src stays open to any https host because the Instagram
+# section loads whatever CDN the Behold feed hands back.
+/*
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  X-Frame-Options: DENY
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://formspree.io https://feeds.behold.so https://cloudflareinsights.com; form-action 'self' https://formspree.io; frame-ancestors 'none'; base-uri 'self'; object-src 'none'

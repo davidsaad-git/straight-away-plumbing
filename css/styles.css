@@ -37,7 +37,7 @@ body {
 
 img { max-width: 100%; display: block; }
 
-a { color: var(--blue-600); text-decoration: none; }
+a { color: var(--blue-700); text-decoration: none; }
 
 .container {
   width: min(1160px, 92%);
@@ -908,4 +908,78 @@ section { padding: 4.5rem 0; }
   .hero-usps { gap: 0.55rem 1.2rem; margin-top: 1.6rem; }
   .hero-usps .usp { font-size: 0.86rem; }
   .hero-actions .btn { flex: 1 1 auto; justify-content: center; }
+}
+
+/* ---------- Accessibility ---------- */
+
+/* Labels that screen readers announce but sighted users do not see: the form
+   is designed around placeholders, which vanish as soon as someone types. */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Jump straight past the nav. Only visible once it has keyboard focus. */
+.skip-link {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -120%);
+  z-index: 200;
+  background: var(--white);
+  color: var(--navy-900);
+  font-weight: 700;
+  padding: 0.7rem 1.2rem;
+  border-radius: 0 0 var(--radius) var(--radius);
+  box-shadow: var(--shadow-lg);
+  transition: transform 0.18s ease;
+}
+.skip-link:focus { transform: translate(-50%, 0); }
+
+/* The target takes focus programmatically; it should not draw a ring for it. */
+[id="main"]:focus { outline: none; }
+
+/* Keyboard users need to see where they are. :focus-visible keeps this off
+   mouse clicks, so the design is unchanged for everyone else. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+.skip-link:focus-visible {
+  outline: 3px solid var(--cyan-400);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+.site-header a:focus-visible,
+.site-footer a:focus-visible,
+.topbar a:focus-visible {
+  outline-color: var(--cyan-300);
+}
+
+/* ---------- Legal pages ---------- */
+.legal {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 3rem 0 3.5rem;
+}
+.legal h2 {
+  font-size: 1.25rem;
+  color: var(--navy-800);
+  margin: 2.2rem 0 0.6rem;
+}
+.legal h2:first-of-type { margin-top: 0; }
+.legal p, .legal li { color: var(--grey-600); margin-bottom: 0.8rem; }
+.legal ul { padding-left: 1.2rem; margin-bottom: 1rem; }
+.legal li { margin-bottom: 0.35rem; }
+.legal .updated {
+  font-size: 0.9rem;
+  color: var(--grey-600);
+  border-left: 3px solid var(--cyan-500);
+  padding-left: 0.9rem;
+  margin-bottom: 2rem;
 }
