@@ -11,6 +11,10 @@ frameworks - just HTML, CSS and a little JavaScript.
 - `services.html` - All 12 services (from the Facebook page's services list)
 - `contact.html` - Contact details + quote form
 
+- `404.html` - shown for any unknown path. Its links are **root-relative**, because
+  Cloudflare serves it at whatever depth was requested; relative paths would break
+  the stylesheet and nav on anything below the first level.
+
 Shared assets: `css/styles.css`, `js/main.js`, and the icons in `images/`
 (`favicon.png`, `apple-touch-icon.png`, `icon-512.png`, `og-image.png`).
 
@@ -29,6 +33,11 @@ Deployed on **Cloudflare Pages**, connected to this GitHub repo.
 
 Cloudflare serves clean URLs: `/about` rather than `/about.html`, with the `.html`
 form redirecting to it. Canonical tags and `sitemap.xml` use the clean form.
+
+`_headers` caches the versioned CSS and JS, and the images, for a year. That is why
+the `?v=N` bump above matters: without it a returning visitor keeps the old file for
+a year, not just until they refresh. Images are cached by name, so give a changed
+image a new filename rather than overwriting it.
 
 ## Business details used
 
