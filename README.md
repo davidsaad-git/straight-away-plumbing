@@ -139,8 +139,23 @@ page). It is cookieless, so no consent banner is needed.
   (`header`, `hero`, `floating_button`, `footer`)
 - `quote_submit` / `quote_error` - the quote form result
 
-Cloudflare Web Analytics has **no custom-event API**, so these events fire but are
-not yet stored anywhere.
+Both now land in **Google Analytics 4** (`G-JG0DEKLDEV`) through Cloudflare Zaraz,
+which forwards `zaraz.track()` calls server-side.
+
+Two things about that setup are deliberate. Zaraz's GA4 tool runs with **"Access
+client key-value store" off**, so it sets no cookies: event counts - the thing worth
+knowing - record fine without one, and audience numbers come from Cloudflare Web
+Analytics, which is accurate and cookieless. GA4's own users and sessions figures
+are therefore inflated and should be ignored. It also runs with **Hide Originating
+IP Address on** and **Audiences off**. Together that is what keeps the privacy
+policy's "sets no tracking cookies" and "does not follow you across other sites"
+true, and why there is still no consent banner. Turning any of the three back on
+means rewriting that policy first.
+
+Zaraz's **auto-injection does not reach responses served by Pages**, even with the
+setting switched on, so `/cdn-cgi/zaraz/i.js` is in the markup by hand next to the
+beacon. It is same-origin, as is everything it goes on to load, so `script-src
+'self'` and `connect-src 'self'` already cover it - the CSP needs no Google host.
 
 **The decision is Cloudflare Zaraz** (`zaraz.track`), switched on once the real
 domain is live - Zaraz needs the domain to be a Cloudflare zone, so it cannot be
@@ -169,18 +184,10 @@ reordered as things land, and numbers rot silently.
    do not add people to any marketing list; and that you never share enquiry details
    beyond what a job requires. Correct them if any is wrong.
 
-### Launch day - the domain is attached, so these are unblocked
-
-3. **Switch on Cloudflare Zaraz** so `call_click` and `quote_submit` are actually
-    recorded. The domain is a Cloudflare zone now, so this is available. No code
-    change: `track()` already calls it. Data only exists from
-    the day it is enabled and cannot be backfilled, so do not leave this late.
 ### After the swap is live
 
-4. **Re-test the CSP** with Zaraz running. It serves from `/cdn-cgi/`, so
-    `script-src 'self'` should cover it - check the console rather than assume.
-5. **HSTS `preload`** - weeks later, once the domain is settled. Hard to undo.
-6. **Watch the free tiers.** Formspree stops at 50 submissions a month and Behold
+3. **HSTS `preload`** - weeks later, once the domain is settled. Hard to undo.
+4. **Watch the free tiers.** Formspree stops at 50 submissions a month and Behold
     at 1,200 page views; both fail quietly. Worth a reminder a month in.
 
 ### Already done
