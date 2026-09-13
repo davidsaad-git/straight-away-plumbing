@@ -646,6 +646,11 @@ section { padding: 4.5rem 0; }
   gap: 0.55rem;
   font-size: 0.94rem;
 }
+.areas-actions { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+/* The "+ More" chip links through to the full list. flex:1 stretches the anchor
+   across the rest of the chip so the whole tile is clickable, not just the text. */
+.areas-list a { color: var(--blue-600); font-weight: 700; flex: 1; }
+.areas-list a:hover { text-decoration: underline; }
 .areas-list li::before {
   content: "";
   width: 8px; height: 8px;
