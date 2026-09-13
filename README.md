@@ -57,6 +57,8 @@ image a new filename rather than overwriting it.
 - Phone: 0403 322 290 (tap-to-call everywhere)
 - Email: straightawayplumbing@gmail.com
 - Hours: Open 24 hours, 7 days
+- Postcode: Schofields **2765**, matching the Google Business Profile. Not 2762,
+  which Schofields also uses - the structured data said 2762 until it was checked
 - Rating: 5.0 stars - 56 Google reviews
 - Facebook: https://www.facebook.com/p/Straight-Away-Plumbing-61574400357083/
 - Instagram: https://www.instagram.com/straightawayplumbing
@@ -145,16 +147,14 @@ in "Launch day" is stuck behind step 6.
 
 ### Do now - nothing blocks these
 
-1. **Get access to the Google Business Profile.** It is already claimed and
-   verified - Google shows the manager as `st...@gmail.com`, which is very likely
-   the `straightawayplumbing@gmail.com` account the site already uses. So this is
-   minutes of work, not the weeks a fresh claim and postcard verification would
-   take. Ask the current manager to add you: Business Profile settings, People and
-   access, Add, then pick **Manager**. Manager can edit details, reply to reviews
-   and pull the review link, but cannot delete the profile or hand ownership away,
-   which is the role you want. Do **not** click "Request access" from another
-   account - that opens a formal transfer request with a multi-day wait, for
-   something a direct invite does instantly.
+1. **Pull the two URLs off the Business Profile** (manager access is in place).
+   From the profile dashboard: the "Ask for reviews" button copies a
+   `g.page/r/.../review` short link - that is the review CTA - and the profile's
+   own URL is what goes in `sameAs`. Both are needed for step 12; nothing on the
+   site can link to Google until they exist. While you are in there, check the
+   profile agrees with the site: phone `0403 322 290`, open 24 hours, primary
+   category Plumber, address in **2765**. Setting the Website field to the
+   `.pages.dev` address now is better than leaving it blank; step 11 changes it.
 2. **Fix the Google rating figure.** The site claims 5.0 in four places
    (`index.html` x3, `about.html` x1); the profile currently shows **4.9** across
    the same 56 reviews. Correct the number, and re-check it whenever the count moves.
@@ -205,11 +205,8 @@ in "Launch day" is stuck behind step 6.
     have handed Google the wrong URL set.
 14. **Re-test the CSP** with Zaraz running. It serves from `/cdn-cgi/`, so
     `script-src 'self'` should cover it - check the console rather than assume.
-15. **Settle the postcode.** The JSON-LD says Schofields **2762**; the Business
-    Profile says Schofields **2765**. Local search leans on the two agreeing, so
-    work out which is right for the actual address and make them match.
-16. **HSTS `preload`** - weeks later, once the domain is settled. Hard to undo.
-17. **Watch the free tiers.** Formspree stops at 50 submissions a month and Behold
+15. **HSTS `preload`** - weeks later, once the domain is settled. Hard to undo.
+16. **Watch the free tiers.** Formspree stops at 50 submissions a month and Behold
     at 1,200 page views; both fail quietly. Worth a reminder a month in.
 
 ### Already done
