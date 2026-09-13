@@ -10,7 +10,12 @@ frameworks - just HTML, CSS and a little JavaScript.
 - `about.html` - About Us
 - `services.html` - All 12 services (from the Facebook page's services list)
 - `contact.html` - Contact details + quote form
-
+- `locations.html` - Service Areas: a search box over an A-Z list of every suburb
+  covered. The chips are plain text, not links - there are no per-suburb pages, and
+  259 near-identical ones would be thin content. Filtering lives in `js/main.js`
+  and matches on a `data-suburb` attribute holding the lowercased name, so there is
+  no string work per keystroke across 259 elements. Empty letter groups hide
+  themselves, and a no-match state offers the phone number instead.
 - `privacy.html` - privacy policy, linked from the footer of every page
 - `404.html` - shown for any unknown path. Its links are **root-relative**, because
   Cloudflare serves it at whatever depth was requested; relative paths would break

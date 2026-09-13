@@ -229,3 +229,44 @@ document.querySelectorAll('form[action*="formspree.io"]').forEach((form) => {
     btn.textContent = original;
   });
 });
+
+// Service areas: filter the suburb list as you type. Matching is on a
+// data-suburb attribute holding the lowercased name, so no per-keystroke
+// string work on 250-odd elements.
+const suburbSearch = document.getElementById('suburbSearch');
+
+if (suburbSearch) {
+  const groups = [...document.querySelectorAll('.area-group')];
+  const chips = [...document.querySelectorAll('.area-chips li')];
+  const count = document.getElementById('areaCount');
+  const empty = document.getElementById('areaEmpty');
+  const total = chips.length;
+
+  const filter = () => {
+    const q = suburbSearch.value.trim().toLowerCase();
+    let shown = 0;
+
+    chips.forEach((chip) => {
+      const hit = !q || chip.dataset.suburb.includes(q);
+      chip.hidden = !hit;
+      if (hit) shown += 1;
+    });
+
+    // Hide a letter heading once nothing under it matches
+    groups.forEach((group) => {
+      group.hidden = !group.querySelector('.area-chips li:not([hidden])');
+    });
+
+    empty.hidden = shown > 0;
+    count.textContent = !q
+      ? 'Showing all ' + total + ' suburbs'
+      : shown === 0
+        ? 'No suburbs match "' + suburbSearch.value.trim() + '"'
+        : 'Showing ' + shown + ' of ' + total + ' suburbs';
+  };
+
+  suburbSearch.addEventListener('input', filter);
+  // A search input's clear button fires search, not input, in Safari
+  suburbSearch.addEventListener('search', filter);
+  filter();
+}
