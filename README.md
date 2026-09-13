@@ -140,32 +140,77 @@ Events are also pushed to `window.dataLayer` for anything else that reads it.
 
 ## Before going live - TODO
 
-1. **Domain** - buy the `.com.au` (needs an ABN), point its nameservers at
-   Cloudflare, then add it under the Pages project's Custom domains.
-2. **Swap the base URL** once the domain is live - 39 hard-coded `pages.dev` URLs:
-   canonical and OG/Twitter tags in the six content pages (`index` and `contact`
-   carry 8 each, the other four 4 each), `sitemap.xml` (6), `robots.txt` (1), and the
-   `url` / `image` / `logo` / `@id` fields in the JSON-LD on `index.html` and
-   `contact.html`. Also update the hostname in Cloudflare Web Analytics.
-   Internal links need no change - they are already root-relative.
-3. **Google Business Profile** - claim and verify it, then link to it. There is
-   currently **no link to Google anywhere on the site**, and the JSON-LD `sameAs` on
-   `index.html` and `contact.html` lists only Facebook and Instagram. Add the direct
-   review link as a CTA under the reviews carousel, and add the profile URL to both
-   `sameAs` arrays. For a local plumber this outranks everything else on this list.
-4. **Search Console** - verify the domain in Google Search Console and Bing
-   Webmaster Tools, submit `sitemap.xml`, request indexing on the six pages.
-5. **Review counts** - the 5.0 stars / 56 reviews figures are hard-coded in
-   `index.html`, `about.html` and `contact.html`; update them as the numbers grow.
-6. **Confirm the privacy policy matches reality** - it was written from what the
+Ordered by what blocks what, not by topic. Steps 4-6 are a chain, and everything
+in "Launch day" is stuck behind step 6.
+
+### Do now - nothing blocks these
+
+1. **Get access to the Google Business Profile.** It is already claimed and
+   verified - Google shows the manager as `st...@gmail.com`, which is very likely
+   the `straightawayplumbing@gmail.com` account the site already uses. So this is
+   minutes of work, not the weeks a fresh claim and postcard verification would
+   take. Ask the current manager to add you: Business Profile settings, People and
+   access, Add, then pick **Manager**. Manager can edit details, reply to reviews
+   and pull the review link, but cannot delete the profile or hand ownership away,
+   which is the role you want. Do **not** click "Request access" from another
+   account - that opens a formal transfer request with a multi-day wait, for
+   something a direct invite does instantly.
+2. **Fix the Google rating figure.** The site claims 5.0 in four places
+   (`index.html` x3, `about.html` x1); the profile currently shows **4.9** across
+   the same 56 reviews. Correct the number, and re-check it whenever the count moves.
+3. **Confirm the privacy policy matches reality** - it was written from what the
    site verifiably does. Check three claims in particular: that enquiry records are
    kept only as long as needed for the job, warranty and tax obligations; that you
    do not add people to any marketing list; and that you never share enquiry details
    beyond what a job requires. Correct them if any is wrong.
-7. **Conversion tracking** - switch on Cloudflare Zaraz so `call_click` and
-   `quote_submit` are actually recorded. Needs the domain on Cloudflare first, so it
-   is a launch-day job. Data only exists from the day it is enabled; it cannot be
-   backfilled.
+
+### The domain chain - each step blocks the next
+
+4. **Buy the `.com.au`** (needs an ABN).
+5. **Point its nameservers at Cloudflare.** Usually quick; allow up to 48 hours.
+6. **Add it under the Pages project's Custom domains.**
+
+### Launch day - all quick, all blocked until step 6
+
+7. **Swap the base URL** - 39 hard-coded `pages.dev` URLs: canonical and OG/Twitter
+   tags in the six content pages (`index` and `contact` carry 8 each, the other four
+   4 each), `sitemap.xml` (6), `robots.txt` (1), and the `url` / `image` / `logo` /
+   `@id` fields in the JSON-LD on `index.html` and `contact.html`.
+   Internal links need no change - they are already root-relative.
+8. **Redirect the `.pages.dev` host at the real domain.** Adding a custom domain
+   does not retire the old address: Cloudflare keeps serving the identical site at
+   both, which is a duplicate of every page. The swapped canonical tags in step 7
+   are the main defence, but a redirect rule on the `pages.dev` hostname is what
+   actually leaves one live copy. Do it while you are in there.
+9. **Update the hostname in Cloudflare Web Analytics.**
+10. **Switch on Cloudflare Zaraz** so `call_click` and `quote_submit` are actually
+    recorded. Zaraz needs the domain to be a Cloudflare zone, which is why it waits
+    for step 6. No code change: `track()` already calls it. Data only exists from
+    the day it is enabled and cannot be backfilled, so do not leave this late.
+11. **Set the Website field on the Business Profile** to the new domain, and while
+    you are there confirm the profile agrees with the site: phone `0403 322 290`,
+    open 24 hours, primary category Plumber.
+12. **Link the site to the profile** - needs step 1 done and step 7 live. There is
+    currently **no link to Google anywhere on the site**, and the JSON-LD `sameAs`
+    on `index.html` and `contact.html` lists only Facebook and Instagram. Add the
+    direct review link (Business Profile, "Ask for reviews", which copies a
+    `g.page/r/.../review` short link) as a CTA under the reviews carousel, and add
+    the profile URL to both `sameAs` arrays.
+
+### After the swap is live
+
+13. **Search Console** - verify the domain in Google Search Console and Bing
+    Webmaster Tools, submit `sitemap.xml`, request indexing on the six pages. This
+    has to follow step 7: verify while the canonicals still say `pages.dev` and you
+    have handed Google the wrong URL set.
+14. **Re-test the CSP** with Zaraz running. It serves from `/cdn-cgi/`, so
+    `script-src 'self'` should cover it - check the console rather than assume.
+15. **Settle the postcode.** The JSON-LD says Schofields **2762**; the Business
+    Profile says Schofields **2765**. Local search leans on the two agreeing, so
+    work out which is right for the actual address and make them match.
+16. **HSTS `preload`** - weeks later, once the domain is settled. Hard to undo.
+17. **Watch the free tiers.** Formspree stops at 50 submissions a month and Behold
+    at 1,200 page views; both fail quietly. Worth a reminder a month in.
 
 ### Already done
 
