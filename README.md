@@ -214,17 +214,20 @@ reordered as things land, and numbers rot silently.
   and other unused artwork were removed. If you add an image, use it or drop it
 - Quote form, live on Formspree (`https://formspree.io/f/myeyonvg`), submitting via
   AJAX so visitors stay on the page. Free plan: 50 submissions/month.
-  **Formspree has its own spam queue, and test submissions land in it.** A run of
-  near-identical submissions from one sender with junk messages is read as spam,
-  correctly - two "test"-type entries sit there now and should be left alone,
-  since marking real junk "not spam" trains the filter the wrong way. The form
-  itself is fine: seven ordinary submissions went straight through.
-  So when a quote seems not to have arrived, check the Formspree Spam tab first,
-  then Gmail, then suspect the code. Worth looking in that tab every month or so:
-  a real enquiry sitting there is a customer who tried to reach you and was
-  silently dropped, which is the only failure on this site that costs money and
-  makes no noise. Test with a realistic message from an unused address, not
-  "test" from your own - the latter is what produced the spam entries.
+  **Formspree's spam filtering keys on origin IP, and the office connection is on
+  its list** after a run of test submissions. Proven both ways: the same form from
+  a phone on mobile data arrives in the inbox; from the office it goes to Spam
+  whatever the message says, and whatever name, email or address is used -
+  changing all three while keeping the connection made no difference. So real
+  customers on their own connections are unaffected and no setting needs changing.
+  Test from mobile data, never from the office: a test from here proves nothing
+  and only adds to that queue. Leave what is in it alone - it is genuinely junk,
+  and marking junk "not spam" trains the filter the wrong way.
+  When a quote seems not to have arrived, check the Formspree Spam tab first,
+  then Gmail, then suspect the code. Worth a look in that tab monthly: a real
+  enquiry sitting there is a customer who tried to reach you and was silently
+  dropped, which is the only failure on this site that costs money and makes no
+  noise.
   The honeypot is not involved - `_gotcha` carries `sr-only`, `tabindex="-1"`
   and `autocomplete="off"`, so autofill does not reach it
 - Instagram section, live via a [Behold](https://behold.so) JSON feed (`FEED_URL` in
