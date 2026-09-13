@@ -213,7 +213,12 @@ reordered as things land, and numbers rot silently.
 - `images/` holds only what the site actually references - the source logo exports
   and other unused artwork were removed. If you add an image, use it or drop it
 - Quote form, live on Formspree (`https://formspree.io/f/myeyonvg`), submitting via
-  AJAX so visitors stay on the page. Free plan: 50 submissions/month
+  AJAX so visitors stay on the page. Free plan: 50 submissions/month.
+  **Gmail filed the first one as spam.** A filter on `from:formspree.io` set to
+  "Never send it to Spam" is in place. If quote emails ever stop arriving, look
+  in spam before assuming the form broke - it sends from a no-reply address, which
+  is exactly what Gmail is suspicious of. Worth a test submission now and then:
+  this is the one failure on the site that costs real money and is silent
 - Instagram section, live via a [Behold](https://behold.so) JSON feed (`FEED_URL` in
   `js/main.js`). The six tiles hard-coded in `index.html` point at
   `images/instagram/` and act as the fallback if the feed fails, so the section
