@@ -84,6 +84,11 @@ spot afterwards, so check these before writing copy or adding markup.
   page. Inline SVGs render at 30px, uploaded PNGs at 24px - the PNG artwork runs edge
   to edge, where the SVG shapes carry margin inside their own viewBox, so equal box
   sizes make the PNGs look bigger.
+- **The Business Profile address and the site need not agree.** The profile shows
+  a street address; the site deliberately shows none. Asked and answered - leave
+  the profile as it is rather than switching it to a service-area listing.
+- **The hard-coded 5.0 Google rating stays as written.** Asked and answered; do
+  not raise it again when the profile average differs.
 - **Copy is plain and first person** ("we"), matching how a tradie actually speaks.
   Avoid marketing filler.
 
@@ -142,8 +147,11 @@ Events are also pushed to `window.dataLayer` for anything else that reads it.
 
 ## Before going live - TODO
 
-Ordered by what blocks what, not by topic. Steps 4-6 are a chain, and everything
-in "Launch day" is stuck behind step 6.
+Ordered by what blocks what, not by topic. The domain chain is a chain, and
+everything under "Launch day" is stuck behind the last step of it.
+
+Cross-references below name their step rather than numbering it - the list gets
+reordered as things land, and numbers rot silently.
 
 ### Do now - nothing blocks these
 
@@ -153,13 +161,8 @@ in "Launch day" is stuck behind step 6.
    service and Hot water system supplier - one category only is the usual reason
    a tradie misses the other searches. Then mirror the 12 services, add photos,
    reply to any unanswered reviews, and set the Website field to the `.pages.dev`
-   address for now (better than blank; step 11 swaps it).
-2. **Consider switching to a service-area business.** The profile publicly shows
-   a street address, where this site deliberately shows none. Google can keep the
-   address on file, hide it, and display the suburbs covered instead - which is
-   both how the business actually works and what the rest of the site already
-   says. Business information, Location, clear the public address.
-3. **Confirm the privacy policy matches reality** - it was written from what the
+   address for now (better than blank; "Set the Website field" swaps it).
+2. **Confirm the privacy policy matches reality** - it was written from what the
    site verifiably does. Check three claims in particular: that enquiry records are
    kept only as long as needed for the job, warranty and tax obligations; that you
    do not add people to any marketing list; and that you never share enquiry details
@@ -167,41 +170,41 @@ in "Launch day" is stuck behind step 6.
 
 ### The domain chain - each step blocks the next
 
-4. **Buy the `.com.au`** (needs an ABN).
-5. **Point its nameservers at Cloudflare.** Usually quick; allow up to 48 hours.
-6. **Add it under the Pages project's Custom domains.**
+3. **Buy the `.com.au`** (needs an ABN).
+4. **Point its nameservers at Cloudflare.** Usually quick; allow up to 48 hours.
+5. **Add it under the Pages project's Custom domains.**
 
-### Launch day - all quick, all blocked until step 6
+### Launch day - all quick, all blocked until the domain is attached
 
-7. **Swap the base URL** - 39 hard-coded `pages.dev` URLs: canonical and OG/Twitter
+6. **Swap the base URL** - 39 hard-coded `pages.dev` URLs: canonical and OG/Twitter
    tags in the six content pages (`index` and `contact` carry 8 each, the other four
    4 each), `sitemap.xml` (6), `robots.txt` (1), and the `url` / `image` / `logo` /
    `@id` fields in the JSON-LD on `index.html` and `contact.html`.
    Internal links need no change - they are already root-relative.
-8. **Redirect the `.pages.dev` host at the real domain.** Adding a custom domain
+7. **Redirect the `.pages.dev` host at the real domain.** Adding a custom domain
    does not retire the old address: Cloudflare keeps serving the identical site at
-   both, which is a duplicate of every page. The swapped canonical tags in step 7
+   both, which is a duplicate of every page. The canonical tags swapped above
    are the main defence, but a redirect rule on the `pages.dev` hostname is what
    actually leaves one live copy. Do it while you are in there.
-9. **Update the hostname in Cloudflare Web Analytics.**
-10. **Switch on Cloudflare Zaraz** so `call_click` and `quote_submit` are actually
+8. **Update the hostname in Cloudflare Web Analytics.**
+9. **Switch on Cloudflare Zaraz** so `call_click` and `quote_submit` are actually
     recorded. Zaraz needs the domain to be a Cloudflare zone, which is why it waits
-    for step 6. No code change: `track()` already calls it. Data only exists from
+    on the domain chain. No code change: `track()` already calls it. Data only exists from
     the day it is enabled and cannot be backfilled, so do not leave this late.
-11. **Set the Website field on the Business Profile** to the new domain, and while
+10. **Set the Website field on the Business Profile** to the new domain, and while
     you are there confirm the profile agrees with the site: phone `0403 322 290`,
     open 24 hours, primary category Plumber.
 
 ### After the swap is live
 
-12. **Search Console** - verify the domain in Google Search Console and Bing
+11. **Search Console** - verify the domain in Google Search Console and Bing
     Webmaster Tools, submit `sitemap.xml`, request indexing on the six pages. This
-    has to follow step 7: verify while the canonicals still say `pages.dev` and you
-    have handed Google the wrong URL set.
-13. **Re-test the CSP** with Zaraz running. It serves from `/cdn-cgi/`, so
+    has to follow the base URL swap: verify while the canonicals still say
+    `pages.dev` and you have handed Google the wrong URL set.
+12. **Re-test the CSP** with Zaraz running. It serves from `/cdn-cgi/`, so
     `script-src 'self'` should cover it - check the console rather than assume.
-14. **HSTS `preload`** - weeks later, once the domain is settled. Hard to undo.
-15. **Watch the free tiers.** Formspree stops at 50 submissions a month and Behold
+13. **HSTS `preload`** - weeks later, once the domain is settled. Hard to undo.
+14. **Watch the free tiers.** Formspree stops at 50 submissions a month and Behold
     at 1,200 page views; both fail quietly. Worth a reminder a month in.
 
 ### Already done
