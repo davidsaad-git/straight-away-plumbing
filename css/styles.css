@@ -430,7 +430,10 @@ section { padding: 4.5rem 0; }
 /* PNG icons sit a little smaller than the SVGs: their artwork runs edge to edge,
    where the SVG shapes carry margin inside their own viewBox. */
 .service-icon img { width: 24px; height: 24px; }
-.service-card h3 { font-size: 1.12rem; margin-bottom: 0.55rem; color: var(--cyan-300); }
+/* The locations page uses h2 per suburb - each area is its own topic - so the
+   heading styles have to match whichever level the card uses. */
+.service-card h3,
+.service-card h2 { font-size: 1.12rem; margin-bottom: 0.55rem; color: var(--cyan-300); }
 .service-card p { color: #b9c9db; font-size: 0.92rem; margin-bottom: 1rem; }
 .service-card .link {
   color: var(--cyan-400);
@@ -1021,3 +1024,7 @@ textarea:focus-visible,
   padding-left: 0.9rem;
   margin-bottom: 2rem;
 }
+
+/* Suburb chips on the home page link through to their section on /locations */
+.areas-list a { color: inherit; display: block; }
+.areas-list li:hover { background: var(--grey-100); }

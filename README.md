@@ -11,6 +11,11 @@ frameworks - just HTML, CSS and a little JavaScript.
 - `services.html` - All 12 services (from the Facebook page's services list)
 - `contact.html` - Contact details + quote form
 
+- `locations.html` - Service Areas: one section per suburb, each with its own
+  anchor (`#blacktown`, `#box-hill`, ...). The copy is deliberately different for
+  each area rather than the same paragraph with the suburb swapped - near-identical
+  blurbs read as thin content and do more harm than good. The suburb chips on the
+  home page link into these anchors.
 - `privacy.html` - privacy policy, linked from the footer of every page
 - `404.html` - shown for any unknown path. Its links are **root-relative**, because
   Cloudflare serves it at whatever depth was requested; relative paths would break
