@@ -25,7 +25,7 @@ Shared assets: `css/styles.css`, `js/main.js`, and the icons in `images/`
 (`favicon.png`, `apple-touch-icon.png`, `icon-512.png`, `og-image.png`).
 
 Both `styles.css` and `main.js` are linked with a `?v=N` cache-buster. **Bump that
-number on every CSS or JS edit**, in all six HTML files (the four above plus
+number on every CSS or JS edit**, in all seven HTML files (the five above plus
 `privacy.html` and `404.html`), or browsers and the Cloudflare edge will keep
 serving the old file and the change will look broken.
 
@@ -76,7 +76,7 @@ spot afterwards, so check these before writing copy or adding markup.
 - **Customer reviews are quoted verbatim** - the reviewers' own spelling, punctuation
   and grammar. Do not tidy them up. Where a review was truncated on Google, it ends in
   an ellipsis rather than being completed.
-- **Bump the `?v=` cache-buster** in all six HTML files on every CSS or JS edit. See
+- **Bump the `?v=` cache-buster** in all seven HTML files on every CSS or JS edit. See
   the note under Pages above.
 - **No street address**, in the copy or the structured data. Suburb, state and
   postcode only.
@@ -147,17 +147,18 @@ in "Launch day" is stuck behind step 6.
 
 ### Do now - nothing blocks these
 
-1. **Pull the two URLs off the Business Profile** (manager access is in place).
-   From the profile dashboard: the "Ask for reviews" button copies a
-   `g.page/r/.../review` short link - that is the review CTA - and the profile's
-   own URL is what goes in `sameAs`. Both are needed for step 12; nothing on the
-   site can link to Google until they exist. While you are in there, check the
-   profile agrees with the site: phone `0403 322 290`, open 24 hours, primary
-   category Plumber, address in **2765**. Setting the Website field to the
-   `.pages.dev` address now is better than leaving it blank; step 11 changes it.
-2. **Fix the Google rating figure.** The site claims 5.0 in four places
-   (`index.html` x3, `about.html` x1); the profile currently shows **4.9** across
-   the same 56 reviews. Correct the number, and re-check it whenever the count moves.
+1. **Tidy the Business Profile.** Manager access is in place and the site now
+   links to it, so what is left is the profile itself. Categories matter most:
+   primary Plumber, plus secondaries for Drainage service, Gas installation
+   service and Hot water system supplier - one category only is the usual reason
+   a tradie misses the other searches. Then mirror the 12 services, add photos,
+   reply to any unanswered reviews, and set the Website field to the `.pages.dev`
+   address for now (better than blank; step 11 swaps it).
+2. **Consider switching to a service-area business.** The profile publicly shows
+   a street address, where this site deliberately shows none. Google can keep the
+   address on file, hide it, and display the suburbs covered instead - which is
+   both how the business actually works and what the rest of the site already
+   says. Business information, Location, clear the public address.
 3. **Confirm the privacy policy matches reality** - it was written from what the
    site verifiably does. Check three claims in particular: that enquiry records are
    kept only as long as needed for the job, warranty and tax obligations; that you
@@ -190,29 +191,26 @@ in "Launch day" is stuck behind step 6.
 11. **Set the Website field on the Business Profile** to the new domain, and while
     you are there confirm the profile agrees with the site: phone `0403 322 290`,
     open 24 hours, primary category Plumber.
-12. **Link the site to the profile** - needs step 1 done and step 7 live. There is
-    currently **no link to Google anywhere on the site**, and the JSON-LD `sameAs`
-    on `index.html` and `contact.html` lists only Facebook and Instagram. Add the
-    direct review link (Business Profile, "Ask for reviews", which copies a
-    `g.page/r/.../review` short link) as a CTA under the reviews carousel, and add
-    the profile URL to both `sameAs` arrays.
 
 ### After the swap is live
 
-13. **Search Console** - verify the domain in Google Search Console and Bing
+12. **Search Console** - verify the domain in Google Search Console and Bing
     Webmaster Tools, submit `sitemap.xml`, request indexing on the six pages. This
     has to follow step 7: verify while the canonicals still say `pages.dev` and you
     have handed Google the wrong URL set.
-14. **Re-test the CSP** with Zaraz running. It serves from `/cdn-cgi/`, so
+13. **Re-test the CSP** with Zaraz running. It serves from `/cdn-cgi/`, so
     `script-src 'self'` should cover it - check the console rather than assume.
-15. **HSTS `preload`** - weeks later, once the domain is settled. Hard to undo.
-16. **Watch the free tiers.** Formspree stops at 50 submissions a month and Behold
+14. **HSTS `preload`** - weeks later, once the domain is settled. Hard to undo.
+15. **Watch the free tiers.** Formspree stops at 50 submissions a month and Behold
     at 1,200 page views; both fail quietly. Worth a reminder a month in.
 
 ### Already done
 
 - ABN and contractor licence number in the footer, so they appear on every page
 - Logo, favicons and home-screen icons, generated from the real logo
+- Google Business Profile linked from the reviews carousel and claimed in the
+  JSON-LD `sameAs`. The review short link is `g.page/r/CXLUFbnpxEBhEBM/review`;
+  the profile is CID `7007817528300131442`, place ID `ChIJI_zfHGtCq2IRctQVuenEQGE`
 - Internal links all point at the clean, root-relative URL, so no visitor or crawler
   eats a redirect. See the note under Hosting before adding a link
 - `images/` holds only what the site actually references - the source logo exports
