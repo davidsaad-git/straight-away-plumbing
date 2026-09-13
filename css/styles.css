@@ -621,6 +621,14 @@ section { padding: 4.5rem 0; }
 }
 .ig-btn-glyph .dot { fill: currentColor; stroke: none; }
 
+/* The Google mark keeps its own four colours rather than currentColor - the
+   brand guidelines require it, and it reads as a Google link at a glance. */
+.g-btn-glyph { width: 1.15em; height: 1.15em; flex-shrink: 0; }
+
+/* Secondary line under a section's main button, for the smaller of two
+   actions. Sits below rather than beside it so the primary stays alone. */
+.cta-aside { margin: 0.9rem 0 0; font-size: 0.9rem; color: var(--grey-600); }
+
 /* ---------- Service areas ---------- */
 .areas-grid {
   display: grid;
