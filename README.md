@@ -165,6 +165,15 @@ preferred instead.
 
 Events are also pushed to `window.dataLayer` for anything else that reads it.
 
+In GA4, `location` and `page` are registered as the custom dimensions **Call
+location** and **Event page**. GA4 discards event parameters that are not
+registered, and does not backfill, so anything added to a `track()` payload later
+needs a matching custom dimension created the same day or the values are lost.
+
+`call_click` and `quote_submit` still need starring as key events under Admin,
+Events, Recent events. That list only populates about 24 hours after GA4 first
+sees an event, which is the one part of this that cannot be done up front.
+
 ## Before going live - TODO
 
 Ordered by what blocks what, not by topic. The domain is live, so nothing here is
