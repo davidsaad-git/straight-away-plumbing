@@ -214,11 +214,14 @@ reordered as things land, and numbers rot silently.
   and other unused artwork were removed. If you add an image, use it or drop it
 - Quote form, live on Formspree (`https://formspree.io/f/myeyonvg`), submitting via
   AJAX so visitors stay on the page. Free plan: 50 submissions/month.
-  **Gmail filed the first one as spam.** A filter on `from:formspree.io` set to
-  "Never send it to Spam" is in place. If quote emails ever stop arriving, look
-  in spam before assuming the form broke - it sends from a no-reply address, which
-  is exactly what Gmail is suspicious of. Worth a test submission now and then:
-  this is the one failure on the site that costs real money and is silent
+  **Formspree's own spam filter quarantined the first submission from the new
+  domain** - it never sent an email at all. Check the Spam queue in the Formspree
+  dashboard before looking in Gmail, and before suspecting the form. Marking a
+  submission "Not spam" there both delivers it and trains the filter.
+  Worth a test submission now and then: a quote request that is silently binned
+  is the one failure on this site that costs real money and makes no noise.
+  The honeypot is not the cause - `_gotcha` carries `sr-only`, `tabindex="-1"`
+  and `autocomplete="off"`, so autofill does not reach it
 - Instagram section, live via a [Behold](https://behold.so) JSON feed (`FEED_URL` in
   `js/main.js`). The six tiles hard-coded in `index.html` point at
   `images/instagram/` and act as the fallback if the feed fails, so the section
