@@ -39,7 +39,13 @@ Deployed on **Cloudflare Pages**, connected to this GitHub repo.
 - Previous deployments can be restored from the Cloudflare dashboard (Rollback)
 
 Cloudflare serves clean URLs: `/about` rather than `/about.html`, with the `.html`
-form redirecting to it. Canonical tags and `sitemap.xml` use the clean form.
+form redirecting to it (a 308). Canonical tags, `sitemap.xml` **and every internal
+link** use the clean, root-relative form - `/about`, `/services#drains`, `/` for
+home. Writing `about.html` in a link still works, but costs every visitor and every
+crawler a redirect hop, so don't: link to `/about`.
+
+This is also why the local preview below uses Wrangler rather than a plain static
+server - nothing else resolves `/about` to `about.html`.
 
 `_headers` caches the versioned CSS and JS, and the images, for a year. That is why
 the `?v=N` bump above matters: without it a returning visitor keeps the old file for
@@ -81,7 +87,7 @@ spot afterwards, so check these before writing copy or adding markup.
 
 ## SEO
 
-- **Open Graph + Twitter card** tags on all four pages, sharing `images/og-image.png`
+- **Open Graph + Twitter card** tags on all six content pages, sharing `images/og-image.png`
   (1200x630, generated from the logo). This is what Facebook and WhatsApp render
   when the link is shared.
 - **`Plumber` JSON-LD schema** on `index.html` and `contact.html` - phone, email,
@@ -136,19 +142,27 @@ Events are also pushed to `window.dataLayer` for anything else that reads it.
 
 1. **Domain** - buy the `.com.au` (needs an ABN), point its nameservers at
    Cloudflare, then add it under the Pages project's Custom domains.
-2. **Swap the base URL** once the domain is live: canonical tags and OG tags in all
-   four HTML files, `sitemap.xml`, `robots.txt`, and the `url` / `image` / `logo` /
-   `@id` fields in the JSON-LD. Also update the hostname in Cloudflare Web Analytics.
-3. **Google reviews link** - the "Read Our Reviews" buttons link to a Google search.
-   Replace with the direct Google Business Profile review link.
-4. **Review counts** - the 5.0 stars / 56 reviews figures are hard-coded in
+2. **Swap the base URL** once the domain is live - 39 hard-coded `pages.dev` URLs:
+   canonical and OG/Twitter tags in the six content pages (`index` and `contact`
+   carry 8 each, the other four 4 each), `sitemap.xml` (6), `robots.txt` (1), and the
+   `url` / `image` / `logo` / `@id` fields in the JSON-LD on `index.html` and
+   `contact.html`. Also update the hostname in Cloudflare Web Analytics.
+   Internal links need no change - they are already root-relative.
+3. **Google Business Profile** - claim and verify it, then link to it. There is
+   currently **no link to Google anywhere on the site**, and the JSON-LD `sameAs` on
+   `index.html` and `contact.html` lists only Facebook and Instagram. Add the direct
+   review link as a CTA under the reviews carousel, and add the profile URL to both
+   `sameAs` arrays. For a local plumber this outranks everything else on this list.
+4. **Search Console** - verify the domain in Google Search Console and Bing
+   Webmaster Tools, submit `sitemap.xml`, request indexing on the six pages.
+5. **Review counts** - the 5.0 stars / 56 reviews figures are hard-coded in
    `index.html`, `about.html` and `contact.html`; update them as the numbers grow.
-5. **Confirm the privacy policy matches reality** - it was written from what the
+6. **Confirm the privacy policy matches reality** - it was written from what the
    site verifiably does. Check three claims in particular: that enquiry records are
    kept only as long as needed for the job, warranty and tax obligations; that you
    do not add people to any marketing list; and that you never share enquiry details
    beyond what a job requires. Correct them if any is wrong.
-6. **Conversion tracking** - switch on Cloudflare Zaraz so `call_click` and
+7. **Conversion tracking** - switch on Cloudflare Zaraz so `call_click` and
    `quote_submit` are actually recorded. Needs the domain on Cloudflare first, so it
    is a launch-day job. Data only exists from the day it is enabled; it cannot be
    backfilled.
@@ -157,6 +171,10 @@ Events are also pushed to `window.dataLayer` for anything else that reads it.
 
 - ABN and contractor licence number in the footer, so they appear on every page
 - Logo, favicons and home-screen icons, generated from the real logo
+- Internal links all point at the clean, root-relative URL, so no visitor or crawler
+  eats a redirect. See the note under Hosting before adding a link
+- `images/` holds only what the site actually references - the source logo exports
+  and other unused artwork were removed. If you add an image, use it or drop it
 - Quote form, live on Formspree (`https://formspree.io/f/myeyonvg`), submitting via
   AJAX so visitors stay on the page. Free plan: 50 submissions/month
 - Instagram section, live via a [Behold](https://behold.so) JSON feed (`FEED_URL` in
@@ -169,7 +187,15 @@ Events are also pushed to `window.dataLayer` for anything else that reads it.
 ## Preview locally
 
 ```bash
-python -m http.server 8735
+npx wrangler pages dev . --port 8735
 ```
 
 Then open http://localhost:8735
+
+This runs the same Pages runtime the site is deployed on, so the preview matches
+production: clean URLs resolve, `/about.html` redirects to `/about`, unknown paths
+serve `404.html`, and the `_headers` rules (CSP, HSTS, the cache headers) are
+applied. First run downloads Wrangler.
+
+`python -m http.server` will not do - it serves `/` but 404s on `/about`, because
+it has no extension-less resolution and ignores `_headers`.
