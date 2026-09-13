@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://straight-away-plumbing.pages.dev/sitemap.xml
+Sitemap: https://straightawayplumbing.com.au/sitemap.xml

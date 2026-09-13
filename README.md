@@ -33,7 +33,8 @@ serving the old file and the change will look broken.
 
 Deployed on **Cloudflare Pages**, connected to this GitHub repo.
 
-- Live at https://straight-away-plumbing.pages.dev
+- Live at https://straightawayplumbing.com.au (apex is canonical; `www` also
+  resolves). The project still answers on straight-away-plumbing.pages.dev
 - Production branch `main`; no build command; build output directory is the repo root
 - **Every push to `main` auto-deploys** in about 30 seconds
 - Previous deployments can be restored from the Cloudflare dashboard (Rollback)
@@ -102,8 +103,8 @@ spot afterwards, so check these before writing copy or adding markup.
 - **`sitemap.xml`** and **`robots.txt`** at the repo root.
 - **Canonical tags** on every page.
 
-All of these carry absolute URLs. **They point at the `.pages.dev` address and must
-be updated when the real domain goes live** - see the TODO below.
+All of these carry absolute URLs, pointing at `https://straightawayplumbing.com.au`.
+Keep any new one absolute and on that host.
 
 ## Security and accessibility
 
@@ -147,8 +148,8 @@ Events are also pushed to `window.dataLayer` for anything else that reads it.
 
 ## Before going live - TODO
 
-Ordered by what blocks what, not by topic. The domain chain is a chain, and
-everything under "Launch day" is stuck behind the last step of it.
+Ordered by what blocks what, not by topic. The domain is live, so nothing here is
+blocked any more.
 
 Cross-references below name their step rather than numbering it - the list gets
 reordered as things land, and numbers rot silently.
@@ -168,43 +169,32 @@ reordered as things land, and numbers rot silently.
    do not add people to any marketing list; and that you never share enquiry details
    beyond what a job requires. Correct them if any is wrong.
 
-### The domain chain - each step blocks the next
+### Launch day - the domain is attached, so these are unblocked
 
-3. **Buy the `.com.au`** (needs an ABN).
-4. **Point its nameservers at Cloudflare.** Usually quick; allow up to 48 hours.
-5. **Add it under the Pages project's Custom domains.**
-
-### Launch day - all quick, all blocked until the domain is attached
-
-6. **Swap the base URL** - 39 hard-coded `pages.dev` URLs: canonical and OG/Twitter
-   tags in the six content pages (`index` and `contact` carry 8 each, the other four
-   4 each), `sitemap.xml` (6), `robots.txt` (1), and the `url` / `image` / `logo` /
-   `@id` fields in the JSON-LD on `index.html` and `contact.html`.
-   Internal links need no change - they are already root-relative.
-7. **Redirect the `.pages.dev` host at the real domain.** Adding a custom domain
+3. **Redirect the `.pages.dev` host at the real domain.** Adding a custom domain
    does not retire the old address: Cloudflare keeps serving the identical site at
    both, which is a duplicate of every page. The canonical tags swapped above
    are the main defence, but a redirect rule on the `pages.dev` hostname is what
    actually leaves one live copy. Do it while you are in there.
-8. **Update the hostname in Cloudflare Web Analytics.**
-9. **Switch on Cloudflare Zaraz** so `call_click` and `quote_submit` are actually
-    recorded. Zaraz needs the domain to be a Cloudflare zone, which is why it waits
-    on the domain chain. No code change: `track()` already calls it. Data only exists from
+4. **Update the hostname in Cloudflare Web Analytics.**
+5. **Switch on Cloudflare Zaraz** so `call_click` and `quote_submit` are actually
+    recorded. The domain is a Cloudflare zone now, so this is available. No code
+    change: `track()` already calls it. Data only exists from
     the day it is enabled and cannot be backfilled, so do not leave this late.
-10. **Set the Website field on the Business Profile** to the new domain, and while
+6. **Set the Website field on the Business Profile** to the new domain, and while
     you are there confirm the profile agrees with the site: phone `0403 322 290`,
     open 24 hours, primary category Plumber.
 
 ### After the swap is live
 
-11. **Search Console** - verify the domain in Google Search Console and Bing
+7. **Search Console** - verify the domain in Google Search Console and Bing
     Webmaster Tools, submit `sitemap.xml`, request indexing on the six pages. This
     has to follow the base URL swap: verify while the canonicals still say
     `pages.dev` and you have handed Google the wrong URL set.
-12. **Re-test the CSP** with Zaraz running. It serves from `/cdn-cgi/`, so
+8. **Re-test the CSP** with Zaraz running. It serves from `/cdn-cgi/`, so
     `script-src 'self'` should cover it - check the console rather than assume.
-13. **HSTS `preload`** - weeks later, once the domain is settled. Hard to undo.
-14. **Watch the free tiers.** Formspree stops at 50 submissions a month and Behold
+9. **HSTS `preload`** - weeks later, once the domain is settled. Hard to undo.
+10. **Watch the free tiers.** Formspree stops at 50 submissions a month and Behold
     at 1,200 page views; both fail quietly. Worth a reminder a month in.
 
 ### Already done
@@ -214,6 +204,12 @@ reordered as things land, and numbers rot silently.
 - Google Business Profile linked from the reviews carousel and claimed in the
   JSON-LD `sameAs`. The review short link is `g.page/r/CXLUFbnpxEBhEBM/review`;
   the profile is CID `7007817528300131442`, place ID `ChIJI_zfHGtCq2IRctQVuenEQGE`
+- Domain live: `straightawayplumbing.com.au`, registered through VentraIP against
+  ABN 63 241 616 098 (partnership, registered business name STRAIGHT AWAY PLUMBING),
+  nameservers `chloe`/`ezra`.ns.cloudflare.com, apex and www both attached to the
+  Pages project with Cloudflare-issued SSL
+- Every absolute URL - canonical, OG, Twitter, JSON-LD, sitemap, robots - is on the
+  real domain
 - Internal links all point at the clean, root-relative URL, so no visitor or crawler
   eats a redirect. See the note under Hosting before adding a link
 - `images/` holds only what the site actually references - the source logo exports
