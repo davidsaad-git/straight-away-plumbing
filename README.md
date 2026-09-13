@@ -88,6 +88,10 @@ spot afterwards, so check these before writing copy or adding markup.
 - **The Business Profile address and the site need not agree.** The profile shows
   a street address; the site deliberately shows none. Asked and answered - leave
   the profile as it is rather than switching it to a service-area listing.
+- **`.pages.dev` is left serving the site.** It cannot be redirected cleanly - a
+  redirect rule needs a zone you own, and that host is Cloudflare's. Every page
+  there declares the real domain as canonical, which is the standard fix and is
+  live. Do not add a Pages Function just for this.
 - **The hard-coded 5.0 Google rating stays as written.** Asked and answered; do
   not raise it again when the profile average differs.
 - **Copy is plain and first person** ("we"), matching how a tradie actually speaks.
@@ -156,13 +160,9 @@ reordered as things land, and numbers rot silently.
 
 ### Do now - nothing blocks these
 
-1. **Tidy the Business Profile.** Manager access is in place and the site now
-   links to it, so what is left is the profile itself. Categories matter most:
-   primary Plumber, plus secondaries for Drainage service, Gas installation
-   service and Hot water system supplier - one category only is the usual reason
-   a tradie misses the other searches. Then mirror the 12 services, add photos,
-   reply to any unanswered reviews, and set the Website field to the `.pages.dev`
-   address for now (better than blank; "Set the Website field" swaps it).
+1. **Finish the Business Profile.** Website and categories are set. What is left is
+   soft: mirror the 12 services, add photos (the Instagram shots are right there),
+   and reply to any review that has not been answered.
 2. **Confirm the privacy policy matches reality** - it was written from what the
    site verifiably does. Check three claims in particular: that enquiry records are
    kept only as long as needed for the job, warranty and tax obligations; that you
@@ -171,30 +171,16 @@ reordered as things land, and numbers rot silently.
 
 ### Launch day - the domain is attached, so these are unblocked
 
-3. **Redirect the `.pages.dev` host at the real domain.** Adding a custom domain
-   does not retire the old address: Cloudflare keeps serving the identical site at
-   both, which is a duplicate of every page. The canonical tags swapped above
-   are the main defence, but a redirect rule on the `pages.dev` hostname is what
-   actually leaves one live copy. Do it while you are in there.
-4. **Update the hostname in Cloudflare Web Analytics.**
-5. **Switch on Cloudflare Zaraz** so `call_click` and `quote_submit` are actually
+3. **Switch on Cloudflare Zaraz** so `call_click` and `quote_submit` are actually
     recorded. The domain is a Cloudflare zone now, so this is available. No code
     change: `track()` already calls it. Data only exists from
     the day it is enabled and cannot be backfilled, so do not leave this late.
-6. **Set the Website field on the Business Profile** to the new domain, and while
-    you are there confirm the profile agrees with the site: phone `0403 322 290`,
-    open 24 hours, primary category Plumber.
-
 ### After the swap is live
 
-7. **Search Console** - verify the domain in Google Search Console and Bing
-    Webmaster Tools, submit `sitemap.xml`, request indexing on the six pages. This
-    has to follow the base URL swap: verify while the canonicals still say
-    `pages.dev` and you have handed Google the wrong URL set.
-8. **Re-test the CSP** with Zaraz running. It serves from `/cdn-cgi/`, so
+4. **Re-test the CSP** with Zaraz running. It serves from `/cdn-cgi/`, so
     `script-src 'self'` should cover it - check the console rather than assume.
-9. **HSTS `preload`** - weeks later, once the domain is settled. Hard to undo.
-10. **Watch the free tiers.** Formspree stops at 50 submissions a month and Behold
+5. **HSTS `preload`** - weeks later, once the domain is settled. Hard to undo.
+6. **Watch the free tiers.** Formspree stops at 50 submissions a month and Behold
     at 1,200 page views; both fail quietly. Worth a reminder a month in.
 
 ### Already done
@@ -204,6 +190,11 @@ reordered as things land, and numbers rot silently.
 - Google Business Profile linked from the reviews carousel and claimed in the
   JSON-LD `sameAs`. The review short link is `g.page/r/CXLUFbnpxEBhEBM/review`;
   the profile is CID `7007817528300131442`, place ID `ChIJI_zfHGtCq2IRctQVuenEQGE`
+- Google Search Console verified (via the Cloudflare DNS hookup) with `sitemap.xml`
+  submitted; all six pages discovered on the first read
+- Cloudflare Web Analytics repointed at the real hostname, same token, history intact
+- Business Profile website field set, and categories are Plumber as primary with
+  Drainage service, Gas installation service and Hot water system supplier beside it
 - Domain live: `straightawayplumbing.com.au`, registered through VentraIP against
   ABN 63 241 616 098 (partnership, registered business name STRAIGHT AWAY PLUMBING),
   nameservers `chloe`/`ezra`.ns.cloudflare.com, apex and www both attached to the
