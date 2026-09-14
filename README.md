@@ -124,8 +124,9 @@ spot afterwards, so check these before writing copy or adding markup.
 - **Customer reviews are quoted verbatim** - the reviewers' own spelling, punctuation
   and grammar. Do not tidy them up. Where a review was truncated on Google, it ends in
   an ellipsis rather than being completed.
-- **Bump the `?v=` cache-buster** in all seven HTML files on every CSS or JS edit. See
-  the note under Pages above.
+- **Bump the `?v=` cache-buster** in all 31 HTML files on every CSS or JS edit -
+  `sed -i 's/v=21/v=22/g' *.html`. Missing the 24 suburb pages leaves them on the
+  old stylesheet for a year. See the note under Pages above.
 - **No street address**, in the copy or the structured data. Suburb, state and
   postcode only.
 - **Service icons**: one icon per service, identical on the homepage and the services
