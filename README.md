@@ -231,9 +231,17 @@ location** and **Event page**. GA4 discards event parameters that are not
 registered, and does not backfill, so anything added to a `track()` payload later
 needs a matching custom dimension created the same day or the values are lost.
 
-`call_click` and `quote_submit` still need starring as key events under Admin,
-Events, Recent events. That list only populates about 24 hours after GA4 first
-sees an event, which is the one part of this that cannot be done up front.
+Both are starred as key events, so they count as leads in the standard reports.
+That could only be done a day after GA4 first saw them - the Recent events list
+takes about 24 hours to populate, which is the one part of this that cannot be
+set up in advance.
+
+The working view is the **Leads** exploration under Explore, in two tabs.
+*Calls by button* splits `call_click` by Call location, which says whether the
+header, hero, floating and footer buttons each earn their place. *Leads total*
+counts `call_click` against `quote_submit` over the period - the number worth
+checking weekly. Expect `(not set)` rows among the early call data: those events
+fired before the custom dimension existed, and they age out.
 
 ## Before going live - TODO
 
