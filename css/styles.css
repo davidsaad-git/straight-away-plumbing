@@ -167,6 +167,8 @@ a { color: var(--blue-700); text-decoration: none; }
   border-bottom-color: var(--cyan-400);
 }
 .header-cta { display: flex; align-items: center; gap: 0.8rem; }
+/* Clears the sticky header when /contact#quote jumps straight to the form */
+#quote { scroll-margin-top: 6rem; }
 
 .nav-toggle {
   display: none;
@@ -392,6 +394,10 @@ section { padding: 4.5rem 0; }
   margin-bottom: 1rem;
 }
 .why-icon svg { width: 28px; height: 28px; stroke: var(--blue-600); }
+/* Same reasoning as .service-icon img: the PNG artwork runs edge to edge, so at
+   an equal box it reads bigger than the SVGs beside it. Without this the img
+   falls back to its 48px width attribute and dwarfs them. */
+.why-icon img { width: 22px; height: 22px; }
 .why-card h3 { font-size: 1.08rem; color: var(--navy-800); margin-bottom: 0.5rem; }
 .why-card p { color: var(--grey-600); font-size: 0.93rem; }
 
@@ -678,6 +684,13 @@ section { padding: 4.5rem 0; }
 }
 .page-hero h1 { font-size: clamp(1.9rem, 3.6vw, 2.7rem); margin-bottom: 0.5rem; }
 .page-hero p { color: #b9c9db; max-width: 38rem; margin: 0 auto; }
+.page-hero .btn-row {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1.6rem;
+}
 
 /* ---------- Values ---------- */
 .values-grid {
@@ -865,6 +878,11 @@ section { padding: 4.5rem 0; }
   align-items: center;
   gap: 0.5rem;
 }
+/* Suburbs with a page of their own link to it; the rest stay plain text. The
+   anchor fills the chip so the whole tile is the target, and --blue-700 is the
+   link colour that clears WCAG AA on white. */
+.area-chips li a { color: var(--blue-700); flex: 1; }
+.area-chips li a:hover { text-decoration: underline; }
 .area-chips li::before {
   content: "";
   width: 7px;

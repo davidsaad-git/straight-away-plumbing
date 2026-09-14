@@ -11,11 +11,15 @@ frameworks - just HTML, CSS and a little JavaScript.
 - `services.html` - All 12 services (from the Facebook page's services list)
 - `contact.html` - Contact details + quote form
 - `locations.html` - Service Areas: a search box over an A-Z list of every suburb
-  covered. The chips are plain text, not links - there are no per-suburb pages, and
-  259 near-identical ones would be thin content. Filtering lives in `js/main.js`
+  covered. The 24 suburbs that have their own page link to it and render in
+  `--blue-700`; the other 235 stay plain text. Filtering lives in `js/main.js`
   and matches on a `data-suburb` attribute holding the lowercased name, so there is
   no string work per keystroke across 259 elements. Empty letter groups hide
   themselves, and a no-match state offers the phone number instead.
+- `plumber-<suburb>.html` x24 - one page per core service area, at `/plumber-penrith`
+  and so on. **Not in the main nav** (five items is already the limit); they are
+  reached from the `/locations` chips, from each other, and from `sitemap.xml`.
+  See **Service area pages** below before adding, editing or removing one.
 - `privacy.html` - privacy policy, linked from the footer of every page
 - `404.html` - shown for any unknown path. Its links are **root-relative**, because
   Cloudflare serves it at whatever depth was requested; relative paths would break
@@ -25,9 +29,10 @@ Shared assets: `css/styles.css`, `js/main.js`, and the icons in `images/`
 (`favicon.png`, `apple-touch-icon.png`, `icon-512.png`, `og-image.png`).
 
 Both `styles.css` and `main.js` are linked with a `?v=N` cache-buster. **Bump that
-number on every CSS or JS edit**, in all seven HTML files (the five above plus
-`privacy.html` and `404.html`), or browsers and the Cloudflare edge will keep
-serving the old file and the change will look broken.
+number on every CSS or JS edit**, in all 31 HTML files (the seven above plus the 24
+suburb pages), or browsers and the Cloudflare edge will keep serving the old file
+and the change will look broken. `sed -i 's/v=21/v=22/g' *.html` does the lot; the
+suburb pages also pick it up from `tools/gen.py` on the next regeneration.
 
 ## Hosting
 
@@ -67,6 +72,48 @@ image a new filename rather than overwriting it.
 No street address is shown anywhere on the site (deliberately). The structured data
 gives suburb, state and postcode only.
 
+## Service area pages
+
+24 pages of the form `/plumber-penrith`, one per core service area. They exist
+because a query like "plumber baulkham hills" is won by a page whose subject is that
+suburb - every organic result for those searches is either a dedicated suburb page or
+an exact-match domain. A suburb named once inside a 259-item chip list does not rank
+for it, however good the rest of the site is.
+
+They are **not** 259 templated clones, and that distinction is the whole point:
+pages that differ only by a swapped suburb name are what Google's spam policy calls
+doorway pages, and the penalty lands on the whole domain. Each page is written around
+what the suburb's housing stock actually produces - new-estate builder defects in
+Marsden Park, tree roots and galvanised pipe in Baulkham Hills, tanks and flood
+drainage in Windsor, shared stacks and strata in Parramatta. Measured overlap across
+the set averages 42% of vocabulary, worst pair 58%, at ~770 words a page; a templated
+set runs above 90%.
+
+**Keep it that way.** If the set is ever extended, the new page needs its own real
+content - the suburb's era, its council, the jobs that follow from how it was built.
+Copying an existing page and changing the name is the one thing that would put the
+rest of the site at risk.
+
+### Regenerating them
+
+`tools/gen.py` builds all 24 from the per-suburb dicts in `tools/sub_data_*.py`:
+
+```bash
+python tools/gen.py
+```
+
+It lifts the header and footer out of `about.html` at run time, so a change to the
+nav, the footer or the analytics snippet reaches all 24 pages by regenerating rather
+than by 24 hand edits. That is the reason it is committed rather than thrown away.
+
+**It overwrites the pages completely.** Edit `tools/sub_data_*.py` and regenerate -
+anything typed directly into a `plumber-*.html` is lost on the next run. The script
+refuses to write a page containing "based in Schofields" or "Windsor Road", which is
+a deliberate guard, not a leftover: the site names no home suburb in its copy.
+
+Per-suburb facts already checked and correct in the data - postcode and council -
+were verified against each suburb, not guessed. Check any you add.
+
 ## Conventions
 
 Decisions already made for this site. They are easy to undo by accident and hard to
@@ -96,6 +143,14 @@ spot afterwards, so check these before writing copy or adding markup.
   not raise it again when the profile average differs.
 - **Copy is plain and first person** ("we"), matching how a tradie actually speaks.
   Avoid marketing filler.
+- **No home suburb in the copy.** The site names no base location - not "based in
+  Schofields", not a travel time from one. Suburbs appear as places served, never as
+  where the business sits. The JSON-LD `addressLocality` on `index.html` and
+  `contact.html` is the one exception and is deliberate: it is machine-readable only,
+  no visitor sees it, and it is a large part of how Google places the business for
+  local searches. Removing it would cost map-pack visibility in the North West.
+- **Suburb pages carry real, suburb-specific content.** See **Service area pages**
+  above. Never clone one.
 
 ## SEO
 
@@ -104,6 +159,12 @@ spot afterwards, so check these before writing copy or adding markup.
   when the link is shared.
 - **`Plumber` JSON-LD schema** on `index.html` and `contact.html` - phone, email,
   hours, area served and the 12 services.
+- **`Service` + `BreadcrumbList` + `FAQPage` JSON-LD** on each of the 24 suburb pages,
+  in one `@graph`. The `Service` node points `provider` at the homepage business via
+  `@id` rather than restating it, so there is one business entity across the site.
+  Note that Google restricted FAQ rich results to authoritative government and health
+  sites in 2023, so the `FAQPage` node will not produce rich snippets here - it is
+  there for entity understanding, not for stars in the SERP.
 - **`sitemap.xml`** and **`robots.txt`** at the repo root.
 - **Canonical tags** on every page.
 
@@ -251,6 +312,9 @@ reordered as things land, and numbers rot silently.
 ```bash
 npx wrangler pages dev . --port 8735
 ```
+
+This is also what `.claude/launch.json` runs. It used to run `python -m http.server`,
+which silently breaks the thing the preview exists to check - see the note below.
 
 Then open http://localhost:8735
 
