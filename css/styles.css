@@ -1135,3 +1135,10 @@ textarea:focus-visible,
 /* Suburb chips on the home page link through to their section on /locations */
 .areas-list a { color: inherit; display: block; }
 .areas-list li:hover { background: var(--grey-100); }
+
+/* Honeypot. This MUST be display:none, not .sr-only - an sr-only field is still
+   rendered at 1px, so browser autofill fills it and Formspree then bins the
+   submission as a bot. That happened, and real quote requests were lost. */
+.hp {
+  display: none !important;
+}
