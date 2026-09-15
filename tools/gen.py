@@ -140,7 +140,7 @@ def build(s):
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{title}</title>
   <meta name="description" content="{desc}">
-  <link rel="stylesheet" href="css/styles.css?v=21">
+  <link rel="stylesheet" href="css/styles.css?v=23">
   <link rel="icon" type="image/png" sizes="64x64" href="images/favicon.png">
   <link rel="icon" type="image/png" sizes="512x512" href="images/icon-512.png">
   <link rel="apple-touch-icon" href="images/apple-touch-icon.png">

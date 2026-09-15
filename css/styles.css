@@ -1059,10 +1059,7 @@ section { padding: 4.5rem 0; }
 
 /* Labels that screen readers announce but sighted users do not see: the form
    is designed around placeholders, which vanish as soon as someone types. */
-/* `input.sr-only` is here so the hidden honeypot beats `.quote-card input`,
-   which would otherwise stretch it to full width and push the page sideways. */
-.sr-only,
-input.sr-only {
+.sr-only {
   position: absolute;
   width: 1px; height: 1px;
   padding: 0; margin: -1px;
@@ -1135,10 +1132,3 @@ textarea:focus-visible,
 /* Suburb chips on the home page link through to their section on /locations */
 .areas-list a { color: inherit; display: block; }
 .areas-list li:hover { background: var(--grey-100); }
-
-/* Honeypot. This MUST be display:none, not .sr-only - an sr-only field is still
-   rendered at 1px, so browser autofill fills it and Formspree then bins the
-   submission as a bot. That happened, and real quote requests were lost. */
-.hp {
-  display: none !important;
-}

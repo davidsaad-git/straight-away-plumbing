@@ -31,7 +31,7 @@ Shared assets: `css/styles.css`, `js/main.js`, and the icons in `images/`
 Both `styles.css` and `main.js` are linked with a `?v=N` cache-buster. **Bump that
 number on every CSS or JS edit**, in all 31 HTML files (the seven above plus the 24
 suburb pages), or browsers and the Cloudflare edge will keep serving the old file
-and the change will look broken. `sed -i 's/v=21/v=22/g' *.html` does the lot; the
+and the change will look broken. `sed -i 's/v=22/v=23/g' *.html` does the lot; the
 suburb pages also pick it up from `tools/gen.py` on the next regeneration.
 
 ## Hosting
@@ -125,7 +125,7 @@ spot afterwards, so check these before writing copy or adding markup.
   and grammar. Do not tidy them up. Where a review was truncated on Google, it ends in
   an ellipsis rather than being completed.
 - **Bump the `?v=` cache-buster** in all 31 HTML files on every CSS or JS edit -
-  `sed -i 's/v=21/v=22/g' *.html`. Missing the 24 suburb pages leaves them on the
+  `sed -i 's/v=22/v=23/g' *.html`. Missing the 24 suburb pages leaves them on the
   old stylesheet for a year. See the note under Pages above.
 - **No street address**, in the copy or the structured data. Suburb, state and
   postcode only.
@@ -307,8 +307,12 @@ reordered as things land, and numbers rot silently.
   enquiry sitting there is a customer who tried to reach you and was silently
   dropped, which is the only failure on this site that costs money and makes no
   noise.
-  The honeypot is not involved - `_gotcha` carries `sr-only`, `tabindex="-1"`
-  and `autocomplete="off"`, so autofill does not reach it
+  There is no honeypot any more. `_gotcha` and its `.hp` rule were removed on
+  15 Sep 2026: a hidden field that silently bins whatever fills it can only ever
+  cost a real customer, and the measured cause of quote requests landing in Spam
+  was the office IP, not the honeypot. Formspree's own filtering still runs, so
+  the trade is a little more junk in the inbox against never dropping a lead
+  without a trace. Don't add one back for anything less than a real bot problem
 - Instagram section, live via a [Behold](https://behold.so) JSON feed (`FEED_URL` in
   `js/main.js`). The six tiles hard-coded in `index.html` point at
   `images/instagram/` and act as the fallback if the feed fails, so the section
